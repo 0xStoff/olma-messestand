@@ -22,7 +22,7 @@ const App = () => {
   return (
     <div>
       <h1>Hello World React Client</h1>
-      <button onClick={getData}>Test</button>
+      <button onClick={getData}>Test Click</button>
     </div>
   );
 };
