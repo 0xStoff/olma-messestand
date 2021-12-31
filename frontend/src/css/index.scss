@@ -1,0 +1,203 @@
+/* Cool grey palette:
+500, #616e7c
+50, #f5f7fa
+100, #e4e7eb
+200, #cbd2d9
+300, #9aa5b1
+400, #7b8794
+500, #616e7c
+600, #52606d 
+700, #3e4c59
+800, #323f4b
+900, #1f2933
+
+blue grey palette:
+500, #627d98
+50, #f0f4f8
+100, #d9e2ec
+200, #bcccdc
+300, #9fb3c8
+400, #829ab1
+500, #627d98
+600, #486581 
+700, #334e68
+800, #243b53
+900, #102a43
+
+Dark grey background::after
+#121212
+*/
+
+@import "../../node_modules/bootstrap/scss/bootstrap.scss";
+
+// COLORS
+$background-color-primary-dark: #102a43;
+$background-color-secondary-dark: #243b53;
+$accent-color-dark: #bcccdc;
+$text-primary-color-dark: #eeeeee;
+
+$background-color-primary-light: #ffffff;
+$background-color-secondary-light: #fafafa;
+$accent-color-light: #243b53;
+$text-primary-color-light: #102a43;
+$element-size: 3rem;
+
+:root.dark-theme {
+  --background-color-primary: #{$background-color-primary-dark};
+  --background-color-secondary: #{$background-color-secondary-dark};
+  --accent-color: #{$accent-color-dark};
+  --text-primary-color: #{$text-primary-color-dark};
+}
+
+:root {
+  --background-color-primary: #{$background-color-primary-light};
+  --background-color-secondary: #{$background-color-secondary-light};
+  --accent-color: #{$accent-color-light};
+  --text-primary-color: #{$text-primary-color-light};
+  --element-size: #{$element-size};
+}
+
+body {
+  background-color: var(--background-color-primary);
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+h1,
+p,
+a,
+.navBar,
+h2,
+th,
+td,
+tr,
+tbody {
+  color: var(--text-primary-color);
+}
+.nav-link:hover,
+.active {
+  color: var(--accent-color) !important;
+}
+
+input {
+  color: var(--accent-color) !important;
+  background-color: var(--background-color-secondary) !important;
+}
+input::placeholder {
+  color: var(--accent-color) !important;
+}
+
+.buttonTheme {
+  color: var(--text-primary-color);
+  background-color: var(--background-color-secondary);
+}
+
+.formPosition {
+  margin: 100px auto;
+  width: 75%;
+}
+
+.generateUsers {
+  width: 100px;
+  height: 40px;
+}
+
+.participants {
+  width: max-content;
+  background-color: var(--background-color-secondary);
+}
+
+.formError {
+  color: #dc3545;
+}
+
+.active {
+  border-bottom: solid 2px var(--text-primary-color);
+}
+
+.submitImgButton {
+  margin-top: -50px;
+}
+
+.dark-mode {
+  justify-content: end;
+  display: flex;
+  padding: 50px 100px 0 0;
+}
+
+.swal2-popup,
+.swal2-modal,
+.swal2-show {
+  background-color: var(--background-color-secondary);
+  color: var(--text-primary-color);
+}
+
+.swal2-confirm {
+  background-color: var(--text-primary-color);
+  color: var(--background-color-primary);
+}
+
+/***********************/
+// body {
+//   background-color: var(--background-color-primary);
+//   margin: 0;
+//   padding: 0;
+
+//   box-sizing: border-box;
+// }
+
+// h1,
+// p,
+// a,
+// .navBar,
+// h2,
+// th,
+// td {
+//   color: var(--text-primary-color);
+// }
+
+// input {
+//   background-color: var(--background-color-secondary) !important;
+// }
+// input::placeholder {
+//   color: var(--accent-color) !important;
+// }
+
+// .buttonTheme {
+//   color: var(--text-primary-color);
+//   background-color: var(--background-color-secondary);
+// }
+
+// .formPosition {
+//   margin: 100px auto;
+//   width: 75%;
+// }
+
+// .generateUsers {
+//   width: 100px;
+//   height: 40px;
+// }
+
+// .participants {
+//   width: max-content;
+//   background-color: var(--background-color-secondary);
+// }
+
+// .formError {
+//   color: #dc3545;
+// }
+
+// .active {
+//   font-weight: bold;
+// }
+
+// .submitImgButton {
+//   margin-top: -50px;
+// }
+
+// .dark-mode {
+//   justify-content: end;
+//   display: flex;
+//   padding: 50px 100px 0 0;
+// }
