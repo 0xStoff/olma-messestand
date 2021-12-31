@@ -8,7 +8,5 @@ const db = mysql.createConnection({
 
 module.exports = db;
 
-
 // CREATE USER 'mysql'@'%' IDENTIFIED WITH mysql_native_password BY 'abcd1234';
 // GRANT ALL PRIVILEGES ON *.* TO 'mysql'@'%';
-

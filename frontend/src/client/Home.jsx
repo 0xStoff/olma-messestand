@@ -2,7 +2,12 @@ import axios from "axios";
 import React, { useState } from "react";
 import { Card, Table, InputGroup, FormControl } from "react-bootstrap";
 import Swal from "sweetalert2";
-
+import {
+  dropTableFunction,
+  queryDataFunction,
+  getRandomUsersFunction,
+  luckyDrawFunction,
+} from "./functions/tableFunctions";
 /* Home-Site Component */
 const Home = (props) => {
   /* define different states */
@@ -15,6 +20,7 @@ const Home = (props) => {
 
   // ajax calls in componentDidMount = useEffect in hooks
   // mounting order: constructor > render > mounted
+
   /* query Data from database with passed arguments (Post or get), nodeJS api */
   const queryData = async (method, data) => {
     try {
@@ -39,83 +45,136 @@ const Home = (props) => {
     }
   };
 
-  /* drop table / delete table from database, nodejs api */
   const dropTable = async () => {
-    try {
-      const response = await axios({
-        url: `http://65.21.60.19:80/api/delete`,
-        method: `POST`,
-        mode: "cors",
-        headers: {
-          "Content-type": "application/json",
-        },
-      });
-
-      setQuery((state) => {
+    const response = await dropTableFunction();
+    if (response) {
+      setQuery(() => {
         return 0;
       });
       setWinnersObj(() => {
         return [];
       });
-      return response;
-    } catch {
-      console.log("error");
+    } else {
+      console.log("err");
     }
   };
 
-  /* get dummy-users from external api, only save the data we need */
   const getRandomUsers = async () => {
-    try {
-      const size = parseInt(teilnehmerInput);
-      const responseRandomUser = await axios.get(
-        `https://random-data-api.com/api/users/random_user?size=${size}`
-      );
-      let cleanTeilnehmer = [];
-      for (let i = 0; i < responseRandomUser.data.length; i++) {
-        const teilnehmerBirth = responseRandomUser.data[i].date_of_birth
-          .split("-")
-          .reverse()
-          .join(".");
-
-        const randomPhoneNumber = await axios({
-          url: "https://random-data-api.com/api/phone_number/random_phone_number",
-          method: "GET",
-          mode: "cors",
-          headers: {
-            "Content-type": "application/json",
-          },
-        });
-
-        const {
-          first_name: vorname,
-          last_name: name,
-          address: { street_address: adresse },
-          id: plz,
-          email,
-        } = responseRandomUser.data[i];
-
-        cleanTeilnehmer[i] = {
-          id: i,
-          vorname,
-          name,
-          geburtstag: teilnehmerBirth,
-          adresse,
-          plz,
-          telefonnummer: randomPhoneNumber.data.cell_phone_in_e164,
-          email,
-          winnerId: 0,
-          selfie: 0,
-        };
-      }
-
-      for (let i = 0; i < cleanTeilnehmer.length; i++) {
-        const teilnehmerJson = JSON.stringify(cleanTeilnehmer[i]);
-        await queryData("post", teilnehmerJson);
-      }
-      return cleanTeilnehmer;
-    } catch (err) {
-      console.log("error: ", err);
+    const responseUsers = await getRandomUsersFunction(teilnehmerInput);
+    for (let i = 0; i < responseUsers.length; i++) {
+      const teilnehmerJson = JSON.stringify(responseUsers[i]);
+      await queryData("post", teilnehmerJson);
     }
+  };
+
+  /* get a winner from teilnehmer and write into database */
+  // const luckyDraw = async () => {
+  //   const response = await axios({
+  //     url: `http://65.21.60.19:80/api/resetwinners`,
+  //     method: `POST`,
+  //     mode: "cors",
+  //     headers: {
+  //       "Content-type": "application/json",
+  //     },
+  //   });
+
+  //   const teilnehmer = query.response.data.length;
+  //   if (teilnehmer < 32) {
+  //     props.errorSwal("At least 32 participants for lottery");
+  //   } else {
+  //     Swal.fire({
+  //       title: `Gewinner werden ermittelt und in DB gespeichert`,
+  //       timerProgressBar: true,
+  //       customClass: {
+  //         confirmButton: "btn",
+  //         cancelButton: "btn btn-danger m-2",
+  //       },
+  //       buttonsStyling: false,
+  //       preConfirm: async () => {
+  //         Swal.showLoading();
+  //         try {
+  //           const participants = query.response.data;
+  //           let winnersId = [];
+  //           let winnersObj = [];
+  //           let uniqueWinners = [];
+  //           let participantSelfie = [];
+
+  //           for (let i = 0; i < participants.length; i++) {
+  //             if (participants[i].selfie == 1) {
+  //               participantSelfie = [
+  //                 ...participantSelfie,
+  //                 participants[i],
+  //                 participants[i],
+  //                 participants[i],
+  //               ];
+  //             }
+  //           }
+
+  //           participants.push(...participantSelfie);
+  //           for (let i = 0; uniqueWinners.length < 32; i++) {
+  //             winnersId[i] = Math.round(
+  //               Math.random() * (participants.length - 1)
+  //             );
+  //             winnersObj[i] = participants[winnersId[i]];
+  //             uniqueWinners = [...new Set(winnersObj)];
+  //           }
+
+  //           for (let i = 0; i < uniqueWinners.length; i++) {
+  //             uniqueWinners[i].winnerId = i + 1;
+  //             const uniqueWinnersJson = JSON.stringify(uniqueWinners[i]);
+  //             await axios({
+  //               url: `http://65.21.60.19:80/api/winners`,
+  //               method: `POST`,
+  //               mode: "cors",
+  //               data: uniqueWinnersJson,
+  //               headers: {
+  //                 "Content-type": "application/json",
+  //               },
+  //             });
+  //           }
+  //           await queryData("get");
+
+  //           setWinnersObj(() => {
+  //             return uniqueWinners;
+  //           });
+  //         } catch {
+  //           console.log("error");
+  //         }
+  //       },
+  //     })
+  //       .then((result) => {
+  //         if (result.isConfirmed) {
+  //           props.successSwal("Gewinner erfolgreich in DB gespeicher");
+  //         }
+  //       })
+  //       .catch((error) => {
+  //         Swal.showValidationMessage(`Request failed: ${error}`);
+  //       });
+  //   }
+  // };
+
+  const luckyDraw = async () => {
+    const uniqueWinners = await luckyDrawFunction(query.response.data);
+    let uniqueWinnersJson = [];
+    setWinnersObj(() => {
+      return uniqueWinners;
+    });
+    for (let i = 0; i < uniqueWinners.length; i++) {
+      uniqueWinners[i].winnerId = i + 1;
+      uniqueWinnersJson[i] = JSON.stringify(uniqueWinners[i]);
+    }
+
+    await axios({
+      url: `http://65.21.60.19:80/api/winners`,
+      method: `POST`,
+      mode: "cors",
+      data: uniqueWinnersJson,
+      headers: {
+        "Content-type": "application/json",
+      },
+    });
+
+    await queryData("get");
   };
 
   /* error handling for input field */
@@ -132,70 +191,6 @@ const Home = (props) => {
     setTeilnehmerInput(() => {
       return event.target.value;
     });
-  };
-
-  /* get a winner from teilnehmer and write into database */
-  const luckyDraw = async () => {
-    const response = await axios({
-      url: `http://65.21.60.19:80/api/resetwinners`,
-      method: `POST`,
-      mode: "cors",
-      headers: {
-        "Content-type": "application/json",
-      },
-    });
-
-    const teilnehmer = query.response.data.length;
-    if (teilnehmer < 32) {
-      props.errorSwal("At least 32 participants for lottery");
-    } else {
-      try {
-        const participants = query.response.data;
-        let winnersId = [];
-        let winnersObj = [];
-        let uniqueWinners = [];
-        let participantSelfie = [];
-
-        for (let i = 0; i < participants.length; i++) {
-          if (participants[i].selfie == 1) {
-            participantSelfie = [
-              ...participantSelfie,
-              participants[i],
-              participants[i],
-              participants[i],
-            ];
-          }
-        }
-
-        participants.push(...participantSelfie);
-        for (let i = 0; uniqueWinners.length < 32; i++) {
-          winnersId[i] = Math.round(Math.random() * (participants.length - 1));
-          winnersObj[i] = participants[winnersId[i]];
-          uniqueWinners = [...new Set(winnersObj)];
-        }
-
-        for (let i = 0; i < uniqueWinners.length; i++) {
-          uniqueWinners[i].winnerId = i + 1;
-          const uniqueWinnersJson = JSON.stringify(uniqueWinners[i]);
-          await axios({
-            url: `http://65.21.60.19:80/api/winners`,
-            method: `POST`,
-            mode: "cors",
-            data: uniqueWinnersJson,
-            headers: {
-              "Content-type": "application/json",
-            },
-          });
-        }
-        await queryData("get");
-
-        setWinnersObj(() => {
-          return uniqueWinners;
-        });
-      } catch {
-        console.log("error");
-      }
-    }
   };
 
   return (
@@ -258,15 +253,27 @@ you can use the function only with queryData later.
 */
 const Buttons = (props) => {
   const buttonClass = "btn btn-outline-dark m-2 buttonTheme";
+  const {
+    queryData,
+    query,
+    successSwal,
+    dropTable,
+    errorSwal,
+    getRandomUsers,
+    luckyDraw,
+    confirmSwal,
+    teilnehmerInput,
+  } = props;
+
   return (
     <div className="mt-5">
       <button
         onClick={async () => {
           try {
-            await props.queryData("get");
+            await queryData("get");
           } catch {
-            if (props.query.response == undefined) {
-              props.errorSwal("Generate Data First!");
+            if (query.response == undefined) {
+              errorSwal("Generate Data First!");
             }
           }
         }}
@@ -277,17 +284,14 @@ const Buttons = (props) => {
       </button>
       <button
         onClick={async () => {
-          if (
-            props.query.response == undefined ||
-            props.query.response.data.length == 0
-          ) {
-            props.errorSwal("Nothing to drop, generate first!");
+          if (query.response == undefined || query.response.data.length == 0) {
+            errorSwal("Nothing to drop, generate first!");
           } else {
-            const confirm = await props.confirmSwal("Are you Sure?");
+            const confirm = await confirmSwal("Are you Sure?");
 
             if (confirm.isConfirmed) {
-              props.successSwal(`Database dropped successfully`);
-              props.dropTable();
+              successSwal(`Database dropped successfully`);
+              dropTable();
             }
           }
         }}
@@ -298,12 +302,12 @@ const Buttons = (props) => {
       </button>
       <button
         onClick={() => {
-          if (!props.teilnehmerInput) {
-            props.errorSwal("No Input");
+          if (!teilnehmerInput) {
+            errorSwal("No Input");
           } else {
             if (
-              props.query.response == undefined ||
-              props.query.response.data.length == 0
+              query.response == undefined ||
+              query.response.data.length == 0
             ) {
               Swal.fire({
                 title: "Loading Data into Database?",
@@ -311,7 +315,7 @@ const Buttons = (props) => {
                 showLoaderOnConfirm: true,
                 allowOutsideClick: false,
                 customClass: {
-                  confirmButton: " btn btn-outline-dark",
+                  confirmButton: "btn",
                   cancelButton: "btn btn-danger m-2",
                 },
                 buttonsStyling: false,
@@ -322,8 +326,8 @@ const Buttons = (props) => {
 
                   Swal.showLoading();
                   try {
-                    await props.getRandomUsers();
-                    await props.queryData("get");
+                    await getRandomUsers();
+                    await queryData("get");
                   } catch (err) {
                     Swal.showValidationMessage(`Request failed: ${err}`);
                   }
@@ -331,14 +335,14 @@ const Buttons = (props) => {
               })
                 .then((result) => {
                   if (result.isConfirmed) {
-                    props.successSwal("Participants successfully load");
+                    successSwal("Participants successfully load");
                   }
                 })
                 .catch((error) => {
                   Swal.showValidationMessage(`Request failed: ${error}`);
                 });
             } else {
-              props.errorSwal("Drop Database first!");
+              errorSwal("Drop Database first!");
             }
           }
         }}
@@ -349,11 +353,11 @@ const Buttons = (props) => {
       </button>
       <button
         onClick={() => {
-          if (props.query == 0) {
-            props.errorSwal("Generate and Query Data first");
+          if (query == 0) {
+            errorSwal("Generate and Query Data first");
           } else {
-            props.queryData("get");
-            props.luckyDraw();
+            queryData("get");
+            luckyDraw();
           }
         }}
         type="button"
@@ -417,3 +421,82 @@ const List = (props) => {
 };
 
 export default Home;
+
+/* drop table / delete table from database, nodejs api */
+// const dropTable = async () => {
+//   try {
+//     const response = await axios({
+//       url: `http://65.21.60.19:80/api/delete`,
+//       method: `POST`,
+//       mode: "cors",
+//       headers: {
+//         "Content-type": "application/json",
+//       },
+//     });
+
+//     setQuery((state) => {
+//       return 0;
+//     });
+//     setWinnersObj(() => {
+//       return [];
+//     });
+//     return response;
+//   } catch {
+//     console.log("error");
+//   }
+// };
+
+/* get dummy-users from external api, only save the data we need */
+// const getRandomUsers = async () => {
+//   try {
+//     const size = parseInt(teilnehmerInput);
+//     const responseRandomUser = await axios.get(
+//       `https://random-data-api.com/api/users/random_user?size=${size}`
+//     );
+//     let cleanTeilnehmer = [];
+//     for (let i = 0; i < responseRandomUser.data.length; i++) {
+//       const teilnehmerBirth = responseRandomUser.data[i].date_of_birth
+//         .split("-")
+//         .reverse()
+//         .join(".");
+
+//       const randomPhoneNumber = await axios({
+//         url: "https://random-data-api.com/api/phone_number/random_phone_number",
+//         method: "GET",
+//         mode: "cors",
+//         headers: {
+//           "Content-type": "application/json",
+//         },
+//       });
+
+//       const {
+//         first_name: vorname,
+//         last_name: name,
+//         address: { street_address: adresse },
+//         id: plz,
+//         email,
+//       } = responseRandomUser.data[i];
+
+//       cleanTeilnehmer[i] = {
+//         id: i,
+//         vorname,
+//         name,
+//         geburtstag: teilnehmerBirth,
+//         adresse,
+//         plz,
+//         telefonnummer: randomPhoneNumber.data.cell_phone_in_e164,
+//         email,
+//         winnerId: 0,
+//         selfie: 0,
+//       };
+//     }
+
+//     for (let i = 0; i < cleanTeilnehmer.length; i++) {
+//       const teilnehmerJson = JSON.stringify(cleanTeilnehmer[i]);
+//       await queryData("post", teilnehmerJson);
+//     }
+//     return cleanTeilnehmer;
+//   } catch (err) {
+//     console.log("error: ", err);
+//   }
+// };

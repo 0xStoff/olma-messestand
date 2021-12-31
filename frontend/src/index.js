@@ -6,7 +6,7 @@ import Form from "./client/Form";
 import Selfie from "./client/Selfie";
 import NoPage from "./client/NoPage";
 // import "bootstrap/scss/bootstrap.scss";
-import "./index.scss";
+import "./css/index.css";
 import Swal from "sweetalert2";
 
 /* App with different Routes */

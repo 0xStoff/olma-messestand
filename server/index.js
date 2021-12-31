@@ -106,6 +106,9 @@ db.connect((err) => {
 
   app.post("/api/winners", (req, res) => {
     const teilnehmer = req.body;
+
+    // console.log(req.body)
+
     const sql = `UPDATE teilnehmer SET winnerID=${teilnehmer.winnerId} WHERE id=${teilnehmer.id}`;
 
     db.query(sql, (err, result, fields) => {
@@ -123,22 +126,23 @@ db.connect((err) => {
     });
   });
 
-  app.get('/*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../frontend/build/index.html'), (err) => {
-      if (err) {
-        res.status(500).send(err)
+  app.get("/*", (req, res) => {
+    res.sendFile(
+      path.join(__dirname, "../frontend/build/index.html"),
+      (err) => {
+        if (err) {
+          res.status(500).send(err);
+        }
       }
-    });
+    );
   });
 
-   // Catch any bad requests
-   app.get("/", (req, res) => {
+  // Catch any bad requests
+  app.get("/", (req, res) => {
     res.status(200).json({
       msg: "Catch All",
     });
   });
-
-
 });
 
 app.listen(port, () => {
