@@ -165,9 +165,9 @@ const Selfie = (props) => {
 
                 <button
                   type="submit"
-                  className="btn btn-outline-dark mt-2 mb-5"
+                  className="btn btn-outline-dark mt-2 mb-5 buttonTheme"
                 >
-                  submit
+                  Submit
                 </button>
               </Form>
             </div>

@@ -12016,7 +12016,8 @@ a,
 th,
 td,
 tr,
-tbody {
+tbody,
+.themeText {
   color: var(--text-primary-color);
 }
 
@@ -12093,8 +12094,8 @@ input::placeholder {
 .swal2-popup,
 .swal2-modal,
 .swal2-show {
-  background-color: var(--background-color-secondary);
-  color: var(--text-primary-color);
+  background-color: var(--background-color-secondary) !important;
+  color: var(--text-primary-color) !important;
 }
 
 .swal2-confirm {

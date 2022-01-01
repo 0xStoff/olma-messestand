@@ -217,7 +217,7 @@ const WinForm = (props) => {
                     </p>
                   ) : null}
                 </Row>
-                <Form.Group className="mb-3">
+                <Form.Group className="mb-3 themeText">
                   <Form.Check
                     required
                     name="terms"
