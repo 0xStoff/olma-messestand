@@ -106,15 +106,16 @@ db.connect((err) => {
 
   app.post("/api/winners", (req, res) => {
     const teilnehmer = req.body;
+    let endResult = [];
 
-    // console.log(req.body)
-
-    const sql = `UPDATE teilnehmer SET winnerID=${teilnehmer.winnerId} WHERE id=${teilnehmer.id}`;
-
-    db.query(sql, (err, result, fields) => {
-      if (err) throw err;
-      res.send(result);
-    });
+    for (let i = 0; i < teilnehmer.length; i++) {
+      const sql = `UPDATE teilnehmer SET winnerID=${teilnehmer[i].winnerId} WHERE id=${teilnehmer[i].id}`;
+      db.query(sql, (err, result, fields) => {
+        if (err) throw err;
+        endResult[i] = result;
+      });
+    }
+    res.send(endResult);
   });
 
   app.post("/api/resetwinners", (req, res) => {
