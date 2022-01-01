@@ -31,7 +31,7 @@ const insertParticipant = async (data, props) => {
 
   console.log(data);
   const responseId = await axios({
-    url: "http://65.21.60.19:80/api/get",
+    url: "http://65.21.188.255/api/get",
     method: "GET",
     mode: "cors",
     headers: {
@@ -44,7 +44,7 @@ const insertParticipant = async (data, props) => {
 
   // console.log(teilnehmer);
   const response = await axios({
-    url: "http://65.21.60.19:80/api/post",
+    url: "http://65.21.188.255/api/post",
     method: "POST",
     mode: "cors",
     headers: {
@@ -75,7 +75,7 @@ const WinForm = (props) => {
     <div>
       <div className="formPosition">
         <Formik
-          action="http://65.21.60.19:80/api/upload"
+          action="http://65.21.188.255/api/upload"
           method="post"
           encType="multipart/form-data"
           validator={schema}

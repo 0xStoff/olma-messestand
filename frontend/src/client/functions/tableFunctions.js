@@ -4,7 +4,7 @@ import axios from "axios";
 export const dropTableFunction = async () => {
   try {
     const response = await axios({
-      url: `http://65.21.60.19:80/api/delete`,
+      url: `http://65.21.188.255/:80/api/delete`,
       method: `POST`,
       mode: "cors",
       headers: {

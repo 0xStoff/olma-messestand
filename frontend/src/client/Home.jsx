@@ -25,7 +25,7 @@ const Home = (props) => {
   const queryData = async (method, data) => {
     try {
       const response = await axios({
-        url: `http://65.21.60.19:80/api/${method}`,
+        url: `http://65.21.188.255:80/api/${method}`,
         method: `${method}`,
         mode: "cors",
         data: `${data}`,
@@ -70,7 +70,7 @@ const Home = (props) => {
   /* get a winner from teilnehmer and write into database */
   // const luckyDraw = async () => {
   //   const response = await axios({
-  //     url: `http://65.21.60.19:80/api/resetwinners`,
+  //     url: `http://65.21.188.255:80/api/resetwinners`,
   //     method: `POST`,
   //     mode: "cors",
   //     headers: {
@@ -123,7 +123,7 @@ const Home = (props) => {
   //             uniqueWinners[i].winnerId = i + 1;
   //             const uniqueWinnersJson = JSON.stringify(uniqueWinners[i]);
   //             await axios({
-  //               url: `http://65.21.60.19:80/api/winners`,
+  //               url: `http://65.21.188.255:80/api/winners`,
   //               method: `POST`,
   //               mode: "cors",
   //               data: uniqueWinnersJson,
@@ -165,7 +165,7 @@ const Home = (props) => {
     }
 
     await axios({
-      url: `http://65.21.60.19:80/api/winners`,
+      url: `http://65.21.188.255:80/api/winners`,
       method: `POST`,
       mode: "cors",
       data: uniqueWinnersJson,
@@ -426,7 +426,7 @@ export default Home;
 // const dropTable = async () => {
 //   try {
 //     const response = await axios({
-//       url: `http://65.21.60.19:80/api/delete`,
+//       url: `http://65.21.188.255:80/api/delete`,
 //       method: `POST`,
 //       mode: "cors",
 //       headers: {

@@ -1,9 +1,11 @@
 const mysql = require("mysql");
 const db = mysql.createConnection({
-  host: "localhost",
-  user: "root",
+  host: "127.0.0.1",
+  user: "mysql",
   password: "abcd1234",
   database: "olma_messestand",
+  // socketPath: '/var/lib/mysql/mysql.sock'
+
 });
 
 module.exports = db;

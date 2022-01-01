@@ -10,7 +10,7 @@ const insertImage = async (data, props) => {
 
   await axios({
     method: "POST",
-    url: "http://65.21.60.19:80/api/upload",
+    url: "http://65.21.188.255:80/api/upload",
     data: bodyFormData,
     mode: "cors",
     headers: {
@@ -90,7 +90,7 @@ const Selfie = (props) => {
     await axios({
       method: "GET",
       mode: "cors",
-      url: "http://65.21.60.19:80/api/images",
+      url: "http://65.21.188.255:80/api/images",
     })
       .then((response) => {
         setImages(() => {
@@ -106,7 +106,7 @@ const Selfie = (props) => {
     await axios({
       method: "POST",
       mode: "cors",
-      url: "http://65.21.60.19:80/api/setid",
+      url: "http://65.21.188.255:80/api/setid",
       data: { id: data.id, file: data.file.name },
     })
       .then((response) => {
