@@ -1,11 +1,13 @@
 const mysql = require("mysql");
+
+// SERVER USER mysql
+// LOCALHOST USER root
+
 const db = mysql.createConnection({
   host: "127.0.0.1",
-  user: "mysql",
+  user: "root",
   password: "abcd1234",
   database: "olma_messestand",
-  // socketPath: '/var/lib/mysql/mysql.sock'
-
 });
 
 module.exports = db;

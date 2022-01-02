@@ -108,6 +108,8 @@ db.connect((err) => {
     const teilnehmer = req.body;
     let endResult = [];
 
+    console.log("teilnehmer");
+
     for (let i = 0; i < teilnehmer.length; i++) {
       const sql = `UPDATE teilnehmer SET winnerID=${teilnehmer[i].winnerId} WHERE id=${teilnehmer[i].id}`;
       db.query(sql, (err, result, fields) => {
