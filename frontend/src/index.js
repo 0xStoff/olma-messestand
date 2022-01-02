@@ -9,6 +9,7 @@ import NoPage from "./client/NoPage";
 import "./css/index.css";
 import Swal from "sweetalert2";
 import React from "react";
+import Raffle from "./client/Raffle";
 
 /* App with different Routes */
 
@@ -76,6 +77,7 @@ export default function App() {
           />
           <Route path="form" element={<Form successSwal={successSwal} />} />
           <Route path="selfie" element={<Selfie successSwal={successSwal} />} />
+          <Route path="raffle" element={<Raffle />} />
           <Route path="*" element={<NoPage />} />
         </Route>
       </Routes>

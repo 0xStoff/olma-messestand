@@ -21,6 +21,9 @@ const Layout = () => {
             <NavLink className="text-reset  nav-link " to="/selfie">
               Upload Selfie
             </NavLink>
+            <NavLink className="text-reset  nav-link " to="/raffle">
+              Raffle
+            </NavLink>
           </nav>
           <DarkMode />
         </div>

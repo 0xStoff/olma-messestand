@@ -7,7 +7,6 @@ import {
   getRandomUsersFunction,
   luckyDrawFunction,
 } from "./services/tableFunctions";
-import Buttons from "./components/Buttons";
 import QueryButton from "./components/buttons/QueryButton";
 import DropButton from "./components/buttons/DropButton";
 import GenerateButton from "./components/buttons/GenerateButton";
