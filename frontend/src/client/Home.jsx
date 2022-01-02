@@ -74,9 +74,7 @@ const Home = (props) => {
 
   const luckyDraw = async () => {
     let uniqueWinners = luckyDrawFunction(query.response.data);
-    setWinnersObj(() => {
-      return uniqueWinners;
-    });
+
     for (let i = 0; i < uniqueWinners.length; i++) {
       uniqueWinners[i].winnerId = i + 1;
     }
@@ -90,7 +88,9 @@ const Home = (props) => {
         "Content-type": "application/json",
       },
     });
-
+    setWinnersObj(() => {
+      return uniqueWinners;
+    });
     queryData();
   };
 
@@ -112,7 +112,7 @@ const Home = (props) => {
 
   return (
     /* pass Home instead, use onDelete/handleDelete, destructure arguments */
-    <div>
+    <div className="mt-5">
       <QueryButton queryData={queryData} />
       <DropButton
         query={query}
