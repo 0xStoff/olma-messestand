@@ -1,20 +1,23 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { Card, Table, InputGroup, FormControl } from "react-bootstrap";
-import Swal from "sweetalert2";
 import {
   dropTableFunction,
   queryDataFunction,
   getRandomUsersFunction,
   luckyDrawFunction,
 } from "./services/tableFunctions";
-
-import ButtonsTest from "./components/Buttons";
+import Buttons from "./components/Buttons";
+import QueryButton from "./components/buttons/QueryButton";
+import DropButton from "./components/buttons/DropButton";
+import GenerateButton from "./components/buttons/GenerateButton";
+import LuckyDrawButton from "./components/buttons/LuckyDrawButton";
 import List from "./components/List";
 
 /* Home-Site Component */
 const Home = (props) => {
   /* define different states */
+  const { errorSwal, successSwal, confirmSwal } = props;
 
   /* any state modified direytly? try console with setState */
   const [query, setQuery] = useState(0);
@@ -27,9 +30,15 @@ const Home = (props) => {
 
   const queryData = async () => {
     const response = await queryDataFunction();
-    setQuery((state) => {
-      return { ...state, response };
-    });
+
+    if (response.data.length == 0) {
+      errorSwal("Generate Data First!");
+    } else {
+      setQuery((state) => {
+        return { ...state, response };
+      });
+    }
+    return response;
   };
 
   const dropTable = async () => {
@@ -64,7 +73,7 @@ const Home = (props) => {
   };
 
   const luckyDraw = async () => {
-    const uniqueWinners = luckyDrawFunction(query.response.data);
+    let uniqueWinners = luckyDrawFunction(query.response.data);
     setWinnersObj(() => {
       return uniqueWinners;
     });
@@ -85,7 +94,6 @@ const Home = (props) => {
     queryData();
   };
 
-  const { errorSwal, successSwal, confirmSwal } = props;
   /* error handling for input field */
   const onChange = (event) => {
     if (parseInt(event.target.value) > 100) {
@@ -105,16 +113,27 @@ const Home = (props) => {
   return (
     /* pass Home instead, use onDelete/handleDelete, destructure arguments */
     <div>
-      <ButtonsTest
-        queryData={queryData}
-        dropTable={dropTable}
-        getRandomUsers={getRandomUsers}
+      <QueryButton queryData={queryData} />
+      <DropButton
         query={query}
-        luckyDraw={luckyDraw}
-        teilnehmerInput={teilnehmerInput}
+        dropTable={dropTable}
         errorSwal={errorSwal}
         successSwal={successSwal}
         confirmSwal={confirmSwal}
+      />
+      <GenerateButton
+        queryData={queryData}
+        getRandomUsers={getRandomUsers}
+        query={query}
+        teilnehmerInput={teilnehmerInput}
+        errorSwal={errorSwal}
+        successSwal={successSwal}
+      />
+      <LuckyDrawButton
+        query={query}
+        queryData={queryData}
+        errorSwal={errorSwal}
+        luckyDraw={luckyDraw}
       />
 
       <InputGroup size="sm" className="generateUsers m-3">

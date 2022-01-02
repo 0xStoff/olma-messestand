@@ -79,6 +79,7 @@ const Images = (props) => {
 
 const Selfie = (props) => {
   const [images, setImages] = useState("");
+  let inputFile = "Selfie hochladen";
 
   useEffect(() => {
     if (!images) {
@@ -116,6 +117,7 @@ const Selfie = (props) => {
         console.log(response);
       });
   };
+
   return (
     <div className="mt-5">
       <Formik
@@ -123,6 +125,7 @@ const Selfie = (props) => {
         onSubmit={(values) => {
           insertImage(values, props);
           setImageId(values);
+          // resetForm();
         }}
         validationSchema={yup.object().shape({
           id: yup.number().required().min(0).max(9999),
@@ -152,11 +155,19 @@ const Selfie = (props) => {
                     isInvalid={errors.id && touched.id}
                   />
                 </Form.Group>
+                <label
+                  className="buttonTheme m-2"
+                  htmlFor="file"
+                  className="btn btn-outline-dark mt-2 buttonTheme"
+                >
+                  {inputFile}{" "}
+                </label>
                 <input
                   id="file"
                   name="file"
                   type="file"
-                  onChange={(event) => {
+                  onChange={(event, file) => {
+                    inputFile = event.currentTarget.files[0].name;
                     setFieldValue("file", event.currentTarget.files[0]);
                   }}
                   className="form-control mt-2"

@@ -85,7 +85,6 @@ export const getRandomUsersFunction = async (teilnehmerInput) => {
 
 export const luckyDrawFunction = (participants) => {
   try {
-    // const participants = query.response.data;
     let winnersId = [];
     let winnersObj = [];
     let uniqueWinners = [];

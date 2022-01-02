@@ -6,30 +6,10 @@ const Buttons = (props) => {
     queryData,
     query,
     successSwal,
-    dropTable,
     errorSwal,
     getRandomUsers,
-    luckyDraw,
-    confirmSwal,
     teilnehmerInput,
   } = props;
-
-  const handleClickGet = async () => {
-    queryData();
-  };
-
-  const handleClickDrop = async () => {
-    if (query.response == undefined || query.response.data.length == 0) {
-      errorSwal("Nothing to drop, generate first!");
-    } else {
-      const confirm = await confirmSwal("Are you Sure?");
-
-      if (confirm.isConfirmed) {
-        successSwal(`Database dropped successfully`);
-        dropTable();
-      }
-    }
-  };
 
   const handleClickGenerate = () => {
     if (!teilnehmerInput) {
@@ -72,58 +52,16 @@ const Buttons = (props) => {
     }
   };
 
-  const handleClickLuckyDraw = () => {
-    if (query == 0) {
-      errorSwal("Generate and Query Data first");
-    } else {
-      queryData();
-      if (query > 32) {
-        luckyDraw();
-      } else {
-        errorSwal("Need more Pariticipants (min 32)");
-      }
-    }
-  };
-
   return (
-    <div className="mt-5">
-      <button
-        onClick={() => {
-          handleClickGet();
-        }}
-        type="button"
-        className={buttonClass}
-      >
-        Query{" "}
-      </button>
-      <button
-        onClick={() => {
-          handleClickDrop();
-        }}
-        type="button"
-        className={buttonClass}
-      >
-        Drop{" "}
-      </button>
-      <button
-        onClick={() => {
-          handleClickGenerate();
-        }}
-        type="button"
-        className={buttonClass}
-      >
-        Generate{" "}
-      </button>
-      <button
-        onClick={() => {
-          handleClickLuckyDraw();
-        }}
-        type="button"
-        className={buttonClass}
-      >
-        Lucky Draw{" "}
-      </button>
-    </div>
+    <button
+      onClick={() => {
+        handleClickGenerate();
+      }}
+      type="button"
+      className={buttonClass}
+    >
+      Generate{" "}
+    </button>
   );
 };
 

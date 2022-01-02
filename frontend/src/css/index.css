@@ -11993,12 +11993,27 @@ fieldset:disabled .btn {
   --text-primary-color: #eeeeee;
 }
 
+:root.dark-theme input::-webkit-calendar-picker-indicator {
+  -webkit-filter: invert(1);
+          filter: invert(1);
+}
+
 :root {
   --background-color-primary: #ffffff;
   --background-color-secondary: #fafafa;
   --accent-color: #243b53;
   --text-primary-color: #102a43;
   --element-size: 3rem;
+}
+
+:root input::-webkit-calendar-picker-indicator {
+  -webkit-filter: invert(0);
+          filter: invert(0);
+}
+
+.buttonTheme {
+  color: var(--text-primary-color);
+  background-color: var(--background-color-secondary);
 }
 
 body {
@@ -12047,11 +12062,6 @@ input::placeholder {
   color: var(--accent-color) !important;
 }
 
-.buttonTheme {
-  color: var(--text-primary-color);
-  background-color: var(--background-color-secondary);
-}
-
 .formPosition {
   margin: 100px auto;
   width: 75%;
@@ -12081,24 +12091,17 @@ input::placeholder {
   margin-top: -50px;
 }
 
-.dark-mode {
-  -webkit-box-pack: end;
-      -ms-flex-pack: end;
-          justify-content: end;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
+.container {
+  margin-top: 50px;
 }
 
-.swal2-container.swal2-center > .swal2-popup {
+.swal2-container.swal2-center > .swal2-popup,
+.swal2-confirm {
   background-color: var(--background-color-secondary);
   color: var(--text-primary-color);
 }
 
-.swal2-confirm {
-  background-color: var(--text-primary-color);
-  color: var(--background-color-primary);
+input[type="file"] {
+  display: none;
 }
-
-/***********************/
 /*# sourceMappingURL=index.css.map */

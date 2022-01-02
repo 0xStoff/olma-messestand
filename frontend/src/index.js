@@ -8,6 +8,7 @@ import NoPage from "./client/NoPage";
 // import "bootstrap/scss/bootstrap.scss";
 import "./css/index.css";
 import Swal from "sweetalert2";
+import React from "react";
 
 /* App with different Routes */
 

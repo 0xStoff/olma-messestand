@@ -47,6 +47,10 @@ $element-size: 3rem;
   --background-color-secondary: #{$background-color-secondary-dark};
   --accent-color: #{$accent-color-dark};
   --text-primary-color: #{$text-primary-color-dark};
+
+  input::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+  }
 }
 
 :root {
@@ -55,8 +59,15 @@ $element-size: 3rem;
   --accent-color: #{$accent-color-light};
   --text-primary-color: #{$text-primary-color-light};
   --element-size: #{$element-size};
-}
 
+  input::-webkit-calendar-picker-indicator {
+    filter: invert(0);
+  }
+}
+.buttonTheme {
+  color: var(--text-primary-color);
+  background-color: var(--background-color-secondary);
+}
 body {
   background-color: var(--background-color-primary);
   margin: 0;
@@ -84,14 +95,10 @@ tbody,
 input {
   color: var(--accent-color) !important;
   background-color: var(--background-color-secondary) !important;
-}
-input::placeholder {
-  color: var(--accent-color) !important;
-}
 
-.buttonTheme {
-  color: var(--text-primary-color);
-  background-color: var(--background-color-secondary);
+  &::placeholder {
+    color: var(--accent-color) !important;
+  }
 }
 
 .formPosition {
@@ -121,85 +128,15 @@ input::placeholder {
   margin-top: -50px;
 }
 
-.dark-mode {
-  justify-content: end;
-  display: flex;
-  // padding: 50px 100px 0 0;
+.container {
+  margin-top: 50px;
 }
 
-// .swal2-popup,
-// .swal2-modal,
-// .swal2-show
-.swal2-container.swal2-center > .swal2-popup {
+.swal2-container.swal2-center > .swal2-popup,
+.swal2-confirm {
   background-color: var(--background-color-secondary);
   color: var(--text-primary-color);
 }
-
-.swal2-confirm {
-  background-color: var(--text-primary-color);
-  color: var(--background-color-primary);
+input[type="file"] {
+  display: none;
 }
-
-/***********************/
-// body {
-//   background-color: var(--background-color-primary);
-//   margin: 0;
-//   padding: 0;
-
-//   box-sizing: border-box;
-// }
-
-// h1,
-// p,
-// a,
-// .navBar,
-// h2,
-// th,
-// td {
-//   color: var(--text-primary-color);
-// }
-
-// input {
-//   background-color: var(--background-color-secondary) !important;
-// }
-// input::placeholder {
-//   color: var(--accent-color) !important;
-// }
-
-// .buttonTheme {
-//   color: var(--text-primary-color);
-//   background-color: var(--background-color-secondary);
-// }
-
-// .formPosition {
-//   margin: 100px auto;
-//   width: 75%;
-// }
-
-// .generateUsers {
-//   width: 100px;
-//   height: 40px;
-// }
-
-// .participants {
-//   width: max-content;
-//   background-color: var(--background-color-secondary);
-// }
-
-// .formError {
-//   color: #dc3545;
-// }
-
-// .active {
-//   font-weight: bold;
-// }
-
-// .submitImgButton {
-//   margin-top: -50px;
-// }
-
-// .dark-mode {
-//   justify-content: end;
-//   display: flex;
-//   padding: 50px 100px 0 0;
-// }

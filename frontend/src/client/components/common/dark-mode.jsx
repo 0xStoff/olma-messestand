@@ -2,7 +2,18 @@ import React, { useState, useEffect } from "react";
 import "./dark-mode.css";
 
 const DarkMode = () => {
-  const [userTheme, setUserTheme] = useState("light-theme");
+  const getMediaPreference = () => {
+    const hasDarkPreference = window.matchMedia(
+      "(prefers-color-scheme: dark)"
+    ).matches;
+    if (hasDarkPreference) {
+      return "dark-theme";
+    } else {
+      return "light-theme";
+    }
+  };
+
+  const [userTheme, setUserTheme] = useState(getMediaPreference());
 
   useEffect(() => {
     const initUserTheme = getMediaPreference();
@@ -20,23 +31,20 @@ const DarkMode = () => {
 
   const setTheme = (theme) => {
     localStorage.setItem("user-theme", theme);
-    setUserTheme(theme);
     document.documentElement.className = theme;
+    setUserTheme(theme);
   };
 
-  const getMediaPreference = () => {
-    const hasDarkPreference = window.matchMedia(
-      "(prefers-color-scheme: dark)"
-    ).matches;
-    if (hasDarkPreference) {
-      return "dark-theme";
-    } else {
-      return "light-theme";
-    }
-  };
+  const toggleClass =
+    userTheme === "dark-theme"
+      ? "switch-toggle"
+      : "switch-toggle switch-toggle-checked";
 
+  // userTheme === "dark-theme"
+  //     ? "switch-toggle"
+  //     : "switch-toggle switch-toggle-checked"
   return (
-    <div>
+    <React.Fragment>
       <input
         onChange={toggleTheme}
         id="checkbox"
@@ -47,14 +55,20 @@ const DarkMode = () => {
         <span>🌙</span>
         <span>☀️</span>
         <div
-          className={
-            userTheme === "dark-theme"
-              ? "switch-toggle"
-              : "switch-toggle switch-toggle-checked"
-          }
+          // :class="{ 'switch-toggle-checked': userTheme === 'dark-theme' }"
+          // className={
+          //   userTheme === "dark-theme" ? " switch-toggle-checked" : null
+          // }
+
+          className={toggleClass}
+          // className={
+          //   userTheme === "dark-theme"
+          //     ? "switch-toggle"
+          //     : "switch-toggle switch-toggle-checked"
+          // }
         ></div>
       </label>
-    </div>
+    </React.Fragment>
   );
 };
 

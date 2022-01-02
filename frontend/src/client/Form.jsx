@@ -92,9 +92,10 @@ const WinForm = (props) => {
             selfie: 0,
             terms: false,
           }}
-          onSubmit={(values, { setSubmitting }) => {
+          onSubmit={(values, { setSubmitting, resetForm }) => {
             insertParticipant(values, props);
             setSubmitting(false);
+            resetForm({ values: "" });
           }}
         >
           {({
@@ -108,7 +109,7 @@ const WinForm = (props) => {
           }) => {
             return (
               <Form noValidate onSubmit={handleSubmit}>
-                <p>{values.id}</p>
+                {/* <p>{values.id}</p> */}
                 <Row>
                   <Form.Group as={Col} md="5" className="mb-2">
                     <Form.Control
