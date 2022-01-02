@@ -1,7 +1,7 @@
 import { Outlet, NavLink } from "react-router-dom";
 import React from "react";
-import DarkMode from "./components/dark-mode";
-import "./components/dark-mode.css";
+import DarkMode from "./components/common/dark-mode";
+import "./components/common/dark-mode.css";
 // import "../index.css";
 
 /* Navigation-Links with different paths */

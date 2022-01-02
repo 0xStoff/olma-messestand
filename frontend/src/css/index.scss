@@ -124,14 +124,15 @@ input::placeholder {
 .dark-mode {
   justify-content: end;
   display: flex;
-  padding: 50px 100px 0 0;
+  // padding: 50px 100px 0 0;
 }
 
-.swal2-popup,
-.swal2-modal,
-.swal2-show {
-  background-color: var(--background-color-secondary) !important;
-  color: var(--text-primary-color) !important;
+// .swal2-popup,
+// .swal2-modal,
+// .swal2-show
+.swal2-container.swal2-center > .swal2-popup {
+  background-color: var(--background-color-secondary);
+  color: var(--text-primary-color);
 }
 
 .swal2-confirm {

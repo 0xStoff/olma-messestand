@@ -7,7 +7,7 @@ import {
   queryDataFunction,
   getRandomUsersFunction,
   luckyDrawFunction,
-} from "./functions/tableFunctions";
+} from "./services/tableFunctions";
 
 import ButtonsTest from "./components/Buttons";
 import List from "./components/List";
@@ -85,15 +85,16 @@ const Home = (props) => {
     queryData();
   };
 
+  const { errorSwal, successSwal, confirmSwal } = props;
   /* error handling for input field */
   const onChange = (event) => {
     if (parseInt(event.target.value) > 100) {
       event.target.value = 100;
-      props.errorSwal("Can't fetch more than 100!");
+      errorSwal("Can't fetch more than 100!");
     }
     if (parseInt(event.target.value) < 1) {
       event.target.value = 1;
-      props.errorSwal("Fetch more than 1!");
+      errorSwal("Fetch more than 1!");
     }
 
     setTeilnehmerInput(() => {
@@ -104,19 +105,18 @@ const Home = (props) => {
   return (
     /* pass Home instead, use onDelete/handleDelete, destructure arguments */
     <div>
-      {/* <ButtonsTest /> */}
-      {/* <button className="btn btn-primary">Test</button> */}
-      <Buttons
+      <ButtonsTest
         queryData={queryData}
         dropTable={dropTable}
         getRandomUsers={getRandomUsers}
         query={query}
         luckyDraw={luckyDraw}
         teilnehmerInput={teilnehmerInput}
-        errorSwal={props.errorSwal}
-        successSwal={props.successSwal}
-        confirmSwal={props.confirmSwal}
+        errorSwal={errorSwal}
+        successSwal={successSwal}
+        confirmSwal={confirmSwal}
       />
+
       <InputGroup size="sm" className="generateUsers m-3">
         <FormControl type="number" placeholder="number" onChange={onChange} />
       </InputGroup>
@@ -151,130 +151,6 @@ const Home = (props) => {
 
       <List query={query} />
       <div> {errorServer}</div>
-    </div>
-  );
-};
-
-/* destructure arguments 
-instead of passing props and calling props.method()
-pass a destructured argument like {queryData},
-you can use the function only with queryData later.
-*/
-const Buttons = (props) => {
-  const buttonClass = "btn btn-outline-dark m-2 buttonTheme";
-  const {
-    queryData,
-    query,
-    successSwal,
-    dropTable,
-    errorSwal,
-    getRandomUsers,
-    luckyDraw,
-    confirmSwal,
-    teilnehmerInput,
-  } = props;
-
-  return (
-    <div className="mt-5">
-      <button
-        onClick={async () => {
-          try {
-            queryData();
-            console.log(queryData());
-          } catch {
-            if (query.response == undefined) {
-              errorSwal("Generate Data First!");
-            }
-          }
-        }}
-        type="button"
-        className={buttonClass}
-      >
-        Query{" "}
-      </button>
-      <button
-        onClick={async () => {
-          if (query.response == undefined || query.response.data.length == 0) {
-            errorSwal("Nothing to drop, generate first!");
-          } else {
-            const confirm = await confirmSwal("Are you Sure?");
-
-            if (confirm.isConfirmed) {
-              successSwal(`Database dropped successfully`);
-              props.dropTable();
-            }
-          }
-        }}
-        type="button"
-        className={buttonClass}
-      >
-        Drop{" "}
-      </button>
-      <button
-        onClick={() => {
-          if (!teilnehmerInput) {
-            errorSwal("No Input");
-          } else {
-            if (
-              query.response == undefined ||
-              query.response.data.length == 0
-            ) {
-              Swal.fire({
-                title: "Loading Data into Database?",
-                showCancelButton: true,
-                showLoaderOnConfirm: true,
-                allowOutsideClick: false,
-                customClass: {
-                  confirmButton: "btn",
-                  cancelButton: "btn btn-danger m-2",
-                },
-                buttonsStyling: false,
-                preConfirm: async () => {
-                  document.getElementsByClassName(
-                    "swal2-cancel"
-                  )[0].style.display = "none";
-
-                  Swal.showLoading();
-                  try {
-                    await getRandomUsers();
-                    queryData();
-                  } catch (err) {
-                    Swal.showValidationMessage(`Request failed: ${err}`);
-                  }
-                },
-              })
-                .then((result) => {
-                  if (result.isConfirmed) {
-                    successSwal("Participants successfully load");
-                  }
-                })
-                .catch((error) => {
-                  Swal.showValidationMessage(`Request failed: ${error}`);
-                });
-            } else {
-              errorSwal("Drop Database first!");
-            }
-          }
-        }}
-        type="button"
-        className={buttonClass}
-      >
-        Generate{" "}
-      </button>
-      <button
-        onClick={() => {
-          if (query == 0) {
-            errorSwal("Generate and Query Data first");
-          } else {
-            queryData();
-            luckyDraw();
-          }
-        }}
-        type="button"
-        className={buttonClass}
-      >
-        Lucky Draw{" "}
-      </button>
     </div>
   );
 };

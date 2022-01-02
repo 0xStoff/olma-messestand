@@ -42,7 +42,7 @@ const ButtonsTest = (props) => {
 
             if (confirm.isConfirmed) {
               successSwal(`Database dropped successfully`);
-              props.dropTable();
+              dropTable();
             }
           }
         }}

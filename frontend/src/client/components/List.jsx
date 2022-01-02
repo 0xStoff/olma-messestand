@@ -9,7 +9,6 @@ const List = (props) => {
     mapClients = clients.map((client, i) => {
       return (
         <tr key={i}>
-          {/* <td>{client.id}</td> */}
           <td>{client.vorname}</td>
           <td>{client.name}</td>
           <td>{client.geburtsdatum}</td>
@@ -17,8 +16,6 @@ const List = (props) => {
           <td>{client.plz}</td>
           <td>{client.telefonnummer}</td>
           <td>{client.email}</td>
-          {/* <td>{client.winnerId}</td>
-              <td>{client.selfie}</td> */}
         </tr>
       );
     });
@@ -31,7 +28,6 @@ const List = (props) => {
           <Table>
             <thead>
               <tr>
-                {/* <th>#</th> */}
                 <th>Vorname</th>
                 <th>Nachname</th>
                 <th>Geburtsdatum</th>
@@ -39,8 +35,6 @@ const List = (props) => {
                 <th>PLZ</th>
                 <th>Telefon</th>
                 <th>E-Mail</th>
-                {/* <th>Gewinner</th>
-                    <th>Selfie</th> */}
               </tr>
             </thead>
             <tbody>{mapClients}</tbody>
