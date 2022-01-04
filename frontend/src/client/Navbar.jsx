@@ -1,7 +1,7 @@
 import { Outlet, NavLink } from "react-router-dom";
 import React from "react";
 import DarkMode from "./components/common/dark-mode";
-import "./components/common/dark-mode.css";
+// import "./components/common/dark-mode.css";
 
 /* Navigation-Links with different paths */
 const Layout = () => {
@@ -14,14 +14,17 @@ const Layout = () => {
               Übersicht
             </NavLink>
 
-            <NavLink className="text-reset  nav-link " to="/form">
+            {/* <NavLink className="text-reset  nav-link " to="/form">
               Gewinnspiel
-            </NavLink>
+            </NavLink> */}
 
             <NavLink className="text-reset  nav-link " to="/selfie">
               Upload Selfie
             </NavLink>
-            <NavLink className="text-reset  nav-link " to="/raffle">
+            {/* <NavLink className="text-reset  nav-link mb-5" to="/raffle">
+              RaffleOld
+            </NavLink> */}
+            <NavLink className="text-reset  nav-link mb-5" to="/raffle">
               Raffle
             </NavLink>
           </nav>

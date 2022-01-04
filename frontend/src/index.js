@@ -1,16 +1,18 @@
 import ReactDOM from "react-dom";
+import { useCallback, useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Layout from "./client/Layout";
+import Navbar from "./client/Navbar";
 import Home from "./client/Home";
-import Form from "./client/Form";
 import Selfie from "./client/Selfie";
 import NoPage from "./client/NoPage";
 // import "bootstrap/scss/bootstrap.scss";
 import "./css/index.css";
 import Swal from "sweetalert2";
 import React from "react";
-import Raffle from "./client/Raffle";
 
+// import RaffleOld from "./client/RaffleOld";
+
+import Gewinnspiel from "./client/Gewinnspiel";
 /* App with different Routes */
 
 export default function App() {
@@ -64,7 +66,7 @@ export default function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Layout />}>
+        <Route path="/" element={<Navbar />}>
           <Route
             index
             element={
@@ -75,9 +77,10 @@ export default function App() {
               />
             }
           />
-          <Route path="form" element={<Form successSwal={successSwal} />} />
+          {/* <Route path="form" element={<Form successSwal={successSwal} />} /> */}
           <Route path="selfie" element={<Selfie successSwal={successSwal} />} />
-          <Route path="raffle" element={<Raffle />} />
+          {/* <Route path="raffle" element={<RaffleOld />} /> */}
+          <Route path="raffle" element={<Gewinnspiel />} />
           <Route path="*" element={<NoPage />} />
         </Route>
       </Routes>
@@ -86,3 +89,10 @@ export default function App() {
 }
 
 ReactDOM.render(<App />, document.getElementById("root"));
+
+{
+  /* <Raffle />
+                 <RaffleOld /> 
+                <Form />
+              </Gewinnspiel> */
+}
