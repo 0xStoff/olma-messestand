@@ -5,26 +5,26 @@ import DarkMode from "./components/common/dark-mode";
 
 /* Navigation-Links with different paths */
 const Layout = () => {
+  const classes = "text-reset  nav-link mb-3";
   return (
     <>
       <div className="container">
         <div className="d-flex">
           <nav className="nav navbar-dark col navBar">
-            <NavLink className="text-reset  nav-link " to="/">
+            <NavLink className={classes} to="/">
               Übersicht
             </NavLink>
 
             {/* <NavLink className="text-reset  nav-link " to="/form">
               Gewinnspiel
             </NavLink> */}
-
-            <NavLink className="text-reset  nav-link " to="/selfie">
+            <NavLink className={classes} to="/selfie">
               Upload Selfie
             </NavLink>
             {/* <NavLink className="text-reset  nav-link mb-5" to="/raffle">
               RaffleOld
             </NavLink> */}
-            <NavLink className="text-reset  nav-link mb-5" to="/raffle">
+            <NavLink className={classes} to="/raffle">
               Raffle
             </NavLink>
           </nav>
