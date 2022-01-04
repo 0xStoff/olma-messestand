@@ -11,7 +11,7 @@ let json = {
   timerMin: "min",
   timerSec: "sec",
   timerSpentNext: "verbleibende Zeit: {0} / bis nächst Frage {1}",
-  completedHtml: `<h2>Vielen Dank für die Teilnahme! <br><br></h2>
+  completedHtml: `<h2>Vielen Dank für die Teilnahme!</h2><br><br>
     <p class='small'>Du wirst automatisch zum Formular weitergeleitet.</p><br>
     <div class="loader mx-auto"></div>`,
 
