@@ -1,6 +1,7 @@
 import { Outlet, NavLink } from "react-router-dom";
 import React from "react";
 import DarkMode from "./components/common/dark-mode";
+import Footer from "./Footer";
 // import "./components/common/dark-mode.css";
 
 /* Navigation-Links with different paths */
@@ -32,6 +33,7 @@ const Layout = () => {
         </div>
         <Outlet />
       </div>
+      <Footer />
     </>
   );
 };

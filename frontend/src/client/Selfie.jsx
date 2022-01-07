@@ -3,6 +3,7 @@ import * as yup from "yup";
 import React, { useState, useEffect } from "react";
 import { Form, Row, Col, Image } from "react-bootstrap";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 const insertImage = async (data, props) => {
   let bodyFormData = new FormData();
@@ -19,6 +20,8 @@ const insertImage = async (data, props) => {
   })
     .then((response) => {
       props.successSwal("Bild erfolgreich eingesendet!");
+      // props.loadImages();
+      // console.log(props);
     })
     .catch((response) => {
       console.log(response);
@@ -45,7 +48,7 @@ const Thumb = (data) => {
         return reader.result;
       });
     };
-  }, [data]);
+  }, [data.file]);
 
   return (
     <div>
@@ -79,15 +82,11 @@ const Images = (props) => {
 
 const Selfie = (props) => {
   const [images, setImages] = useState("");
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
   let inputFile = "Selfie hochladen";
-
-  useEffect(() => {
-    if (!images) {
-      loadImages();
-    }
-  }, [images]);
-
-  const loadImages = async () => {
+  // console.log(images);
+  useEffect(async () => {
     await axios({
       method: "GET",
       mode: "cors",
@@ -101,7 +100,7 @@ const Selfie = (props) => {
       .catch((response) => {
         console.log(response);
       });
-  };
+  });
 
   const setImageId = async (data) => {
     await axios({
@@ -111,7 +110,7 @@ const Selfie = (props) => {
       data: { id: data.id, file: data.file.name },
     })
       .then((response) => {
-        loadImages();
+        // loadImages();
       })
       .catch((response) => {
         console.log(response);
@@ -122,10 +121,11 @@ const Selfie = (props) => {
     <div className="mt-5">
       <Formik
         initialValues={{ file: null, id: "" }}
-        onSubmit={(values) => {
+        onSubmit={(values, { resetForm }) => {
           insertImage(values, props);
           setImageId(values);
-          // resetForm();
+          setIsSubmitted(() => true);
+          resetForm({ values: "" });
         }}
         validationSchema={yup.object().shape({
           id: yup.number().required().min(0).max(9999),
@@ -142,7 +142,7 @@ const Selfie = (props) => {
           handleChange,
         }) => {
           return (
-            <div className="form-group w-50 mt-5">
+            <div className="row w-50">
               <Form onSubmit={handleSubmit}>
                 <Form.Group as={Col} md="5">
                   <Form.Control
@@ -172,7 +172,7 @@ const Selfie = (props) => {
                   }}
                   className="form-control mt-2"
                 />
-                <Thumb file={values.file} />
+                <Thumb file={values.file} isSubmitted={isSubmitted} />
 
                 <button
                   type="submit"
