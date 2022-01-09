@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import { Form, Row, Col, Image } from "react-bootstrap";
 import axios from "axios";
 
-const insertImage = async (data, props) => {
+const insertImage = async (data, props, setIsSubmitted) => {
   let bodyFormData = new FormData();
   bodyFormData.append("file", data.file);
 
@@ -19,6 +19,7 @@ const insertImage = async (data, props) => {
     },
   })
     .then((response) => {
+      setIsSubmitted(() => false);
       props.successSwal("Bild erfolgreich eingesendet!");
       // props.loadImages();
       // console.log(props);
@@ -73,6 +74,9 @@ const Images = (props) => {
       return (
         <Col key={i} xs={6} md={4}>
           <img className="img-thumbnail mt-2" src={`/media/${image}`} />
+          {props.firstNames ? (
+            <p>{props.firstNames.response.data[i].vorname}</p>
+          ) : null}
         </Col>
       );
     });
@@ -82,11 +86,10 @@ const Images = (props) => {
 
 const Selfie = (props) => {
   const [images, setImages] = useState("");
-  // const imageRef = useRef(0);
+  const [firstNames, setFirstNames] = useState(0);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   let inputFile = "Selfie hochladen";
-  // console.log(images);
   const displayImages = async () => {
     await axios({
       method: "GET",
@@ -97,20 +100,32 @@ const Selfie = (props) => {
         setImages(() => {
           return response.data;
         });
+        // console.log(response.data);
       })
       .catch((response) => {
         console.log(response);
       });
+
+    const response = await axios({
+      method: "GET",
+      mode: "cors",
+      url: "http://65.21.188.255:80/api/vorname",
+      headers: {
+        "Content-type": "application/json",
+      },
+    });
+
+    setFirstNames((state) => {
+      return { ...state, response };
+    });
   };
+
+  // useEffect(() => {
+  //   displayFirstNames();
+  // }, []);
 
   useEffect(() => {
     displayImages();
-  }, []);
-
-  useEffect(() => {
-    setTimeout(() => {
-      displayImages();
-    }, 1500);
   }, [isSubmitted]);
 
   const setImageId = async (data) => {
@@ -121,7 +136,9 @@ const Selfie = (props) => {
       data: { id: data.id, file: data.file.name },
     })
       .then((response) => {
-        // loadImages();
+        // setFirstNames((state) => {
+        //   return [...state, response.data[1][0].vorname];
+        // });
       })
       .catch((response) => {
         console.log(response);
@@ -133,9 +150,9 @@ const Selfie = (props) => {
       <Formik
         initialValues={{ file: null, id: "" }}
         onSubmit={(values, { resetForm }) => {
-          insertImage(values, props);
-          setImageId(values);
           setIsSubmitted(() => true);
+          insertImage(values, props, setIsSubmitted);
+          setImageId(values);
           resetForm({ values: "" });
         }}
         validationSchema={yup.object().shape({
@@ -171,7 +188,7 @@ const Selfie = (props) => {
                   htmlFor="file"
                   className="btn btn-outline-dark mt-2 buttonTheme"
                 >
-                  {inputFile}{" "}
+                  {!isSubmitted ? inputFile : <div className="loader"></div>}
                 </label>
                 <input
                   id="file"
@@ -196,7 +213,7 @@ const Selfie = (props) => {
           );
         }}
       </Formik>
-      <Images images={images} />{" "}
+      <Images images={images} firstNames={firstNames} />{" "}
     </div>
   );
 };

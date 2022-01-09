@@ -112,22 +112,24 @@ const Home = (props) => {
     <div className="mt-5">
       <QueryButton queryData={queryData} />
       <DropButton query={query} dropTable={dropTable} swalAlerts={swalAlerts} />
-      <GenerateButton
-        queryData={queryData}
-        getRandomUsers={getRandomUsers}
-        query={query}
-        teilnehmerInput={teilnehmerInput}
-        swalAlerts={swalAlerts}
-      />
       <LuckyDrawButton
         query={query}
         queryData={queryData}
         errorSwal={swalAlerts.errorSwal}
         luckyDraw={luckyDraw}
       />
-      <InputGroup size="sm" className="generateUsers m-2">
-        <FormControl type="number" placeholder="number" onChange={onChange} />
-      </InputGroup>
+      <div className="d-flex">
+        <GenerateButton
+          queryData={queryData}
+          getRandomUsers={getRandomUsers}
+          query={query}
+          teilnehmerInput={teilnehmerInput}
+          swalAlerts={swalAlerts}
+        />
+        <InputGroup size="sm" className="generateUsers m-2">
+          <FormControl type="number" placeholder="number" onChange={onChange} />
+        </InputGroup>
+      </div>
       <List query={query} winnersObj={winnersObj} />
     </div>
   );

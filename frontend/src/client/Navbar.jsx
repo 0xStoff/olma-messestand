@@ -14,11 +14,11 @@ const Layout = () => {
             <NavLink className={classes} to="/">
               Übersicht
             </NavLink>
+            <NavLink className={classes} to="/raffle">
+              Gewinnspiel
+            </NavLink>
             <NavLink className={classes} to="/selfie">
               Upload Selfie
-            </NavLink>
-            <NavLink className={classes} to="/raffle">
-              Raffle
             </NavLink>
           </nav>
           <DarkMode />

@@ -34,6 +34,16 @@ db.connect((err) => {
     });
   });
 
+  app.get("/api/vorname", (req, res) => {
+    db.query(
+      `SELECT vorname FROM gewinnspiel_daten  WHERE selfie != '0'`,
+      (err, result, fields) => {
+        if (err) throw err;
+        res.send(result);
+      }
+    );
+  });
+
   app.get("/api/images", (req, res) => {
     const directoryPath = path.join(__dirname, "../frontend/build/media/");
     fs.readdir(directoryPath, (err, files) => {
@@ -46,10 +56,12 @@ db.connect((err) => {
 
   app.post("/api/setid", async (req, res) => {
     fs.readdir("../frontend/build/media/", (err, files) => {
-      const sql = `UPDATE teilnehmer SET selfie='selfie${files.length}' WHERE id=${req.body.id}`;
+      const sql = `UPDATE gewinnspiel_daten SET selfie='selfie${files.length}' WHERE teilnehmer_id=${req.body.id};
+      SELECT vorname FROM teilnehmer WHERE teilnehmer_id=${req.body.id};`;
 
       db.query(sql, (err, result, fields) => {
         if (err) throw err;
+        console.log(result);
         res.send(result);
       });
     });
@@ -64,7 +76,7 @@ db.connect((err) => {
     form.parse(req, (err, fields, files) => {
       const oldpath = files.file.filepath;
       const extension = path.extname(files.file.originalFilename);
-      const newpath = `../frontend/build/media/selfie${dirLength}.${extension}`;
+      const newpath = `../frontend/build/media/selfie${dirLength}${extension}`;
       fs.rename(oldpath, newpath, (err) => {
         if (err) throw err;
         res.send("File uploaded and moved!");
@@ -84,28 +96,30 @@ db.connect((err) => {
     replace("adresse");
     replace("email");
 
-    const sql = `INSERT INTO teilnehmer VALUES 
+    const sql = `INSERT INTO teilnehmer VALUES
     (${teilnehmer.id},
     '${teilnehmer.vorname}',
     '${teilnehmer.name}',
     '${teilnehmer.geburtstag}',
-    '${teilnehmer.adresse}', 
-    '${teilnehmer.plz}', 
-    '${teilnehmer.telefonnummer}', 
-    '${teilnehmer.email}',
-    ${teilnehmer.winnerId},
-    '${teilnehmer.selfie}',
-    ${teilnehmer.questions}
-    )`;
+    '${teilnehmer.adresse}',
+    '${teilnehmer.plz}',
+    '${teilnehmer.telefonnummer}',
+    '${teilnehmer.email}'); 
+    INSERT INTO gewinnspiel_daten VALUES 
+    (${teilnehmer.id},
+     ${teilnehmer.winnerId},
+     '${teilnehmer.vorname}',
+     '${teilnehmer.selfie}',
+     ${teilnehmer.questions});`;
 
-    db.query(sql, (err, result, fields) => {
+    db.query(sql, [1, 2], (err, result, fields) => {
       if (err) throw err;
       res.send(result);
     });
   });
 
   app.post("/api/delete", (req, res) => {
-    const sql = `DELETE FROM teilnehmer`;
+    const sql = `DELETE gewinnspiel_daten, teilnehmer FROM gewinnspiel_daten INNER JOIN teilnehmer`;
 
     db.query(sql, (err, result, fields) => {
       if (err) throw err;
@@ -117,10 +131,8 @@ db.connect((err) => {
     const teilnehmer = req.body;
     let endResult = [];
 
-    console.log("teilnehmer");
-
     for (let i = 0; i < teilnehmer.length; i++) {
-      const sql = `UPDATE teilnehmer SET winnerID=${teilnehmer[i].winnerId} WHERE id=${teilnehmer[i].id}`;
+      const sql = `UPDATE gewinnspiel_daten SET winner_id=${teilnehmer[i].winnerId} WHERE teilnehmer_id=${teilnehmer[i].teilnehmer_id}`;
       db.query(sql, (err, result, fields) => {
         if (err) throw err;
         endResult[i] = result;
@@ -139,7 +151,7 @@ db.connect((err) => {
   });
 
   app.get("/api/questions", (req, res) => {
-    db.query("SELECT * FROM gewinnspiel", (err, result, fields) => {
+    db.query("SELECT * FROM gewinnspiel_fragen", (err, result, fields) => {
       if (err) throw err;
       res.send(result);
     });
