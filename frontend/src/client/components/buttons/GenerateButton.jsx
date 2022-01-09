@@ -2,14 +2,8 @@ import Swal from "sweetalert2";
 
 const Buttons = (props) => {
   const buttonClass = "btn btn-outline-dark m-2 buttonTheme";
-  const {
-    queryData,
-    query,
-    successSwal,
-    errorSwal,
-    getRandomUsers,
-    teilnehmerInput,
-  } = props;
+  const { queryData, query, getRandomUsers, teilnehmerInput } = props;
+  const { successSwal, errorSwal } = props.swalAlerts;
 
   const handleClickGenerate = () => {
     if (!teilnehmerInput) {

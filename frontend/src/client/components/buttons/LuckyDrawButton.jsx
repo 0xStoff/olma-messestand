@@ -1,5 +1,3 @@
-import Swal from "sweetalert2";
-
 const Buttons = (props) => {
   const buttonClass = "btn btn-outline-dark m-2 buttonTheme";
   const { queryData, query, errorSwal, luckyDraw } = props;

@@ -1,14 +1,13 @@
-import { Survey, Model } from "survey-react";
-import React, { useState, useEffect } from "react";
+import { Survey } from "survey-react";
+import React from "react";
 import "survey-react/survey.css";
 import { raffleQuestions } from "../services/raffleQuestions";
+import { getQuestionsFunctions } from "../services/tableFunctions";
 
 const Raffle = (props) => {
-  const surveyJson = raffleQuestions();
-  const { isCompleted, setIsCompleted, survey } = props;
+  let surveyJson = raffleQuestions();
 
-  const [surveyResult, setSurveyResult] = useState(false);
-  // const [isCompleted, setIsCompleted] = useState(false);
+  const { isCompleted, setIsCompleted, survey } = props;
 
   const arrayEquals = (a, b) => {
     return (
@@ -19,52 +18,31 @@ const Raffle = (props) => {
     );
   };
 
-  // const survey = new Model(surveyJson);
-  // survey.focusFirstQuestionAutomatic = false;
-  // const handleComplete = (sender) => {
-  //  const results = JSON.stringify(sender.data);
-  //   let answers = [];
-  //   let index = 0;
-  //   for (let prop in sender.data) {
-  //     answers[index] = sender.data[prop];
-  //     index++;
-  //   }
-  //   index = 0;
-  //   let correctAnswer = [];
-  //   for (let i = 0; i < surveyJson.pages.length; i++) {
-  //     correctAnswer[i] = surveyJson.pages[i].elements[0].correctAnswer;
-  //   }
-  //   correctAnswer = correctAnswer.slice(1);
+  const handleComplete = async (sender) => {
+    const questions = await getQuestionsFunctions();
 
-  useEffect(() => {
-    // console.log("result: ", surveyResult);
-  }, [surveyResult]);
-
-  const handleComplete = (sender) => {
-    // const results = JSON.stringify(sender.data);
     let answers = [];
     let index = 0;
-    // return sender.data;
-
     for (let prop in sender.data) {
       answers[index] = sender.data[prop];
       index++;
     }
 
     let correctAnswer = [];
-    for (let i = 0; i < surveyJson.pages.length; i++) {
-      correctAnswer[i] = surveyJson.pages[i].elements[0].correctAnswer;
+    for (let i = 1; i < surveyJson.pages.length; i++) {
+      correctAnswer[i] = questions.data[i - 1].antwort;
     }
     correctAnswer = correctAnswer.slice(1);
 
+    props.setSurveyResult(() => {
+      if (arrayEquals(answers, correctAnswer)) return true;
+      else return false;
+    });
     setTimeout(() => {
       setIsCompleted(() => true);
-
-      setSurveyResult(() => {
-        if (arrayEquals(answers, correctAnswer)) return true;
-        else return false;
-      });
     }, 3000);
+    const surveyResult = props.surveyResult;
+
     return { surveyResult, isCompleted };
   };
 
@@ -78,10 +56,6 @@ const Raffle = (props) => {
         onComplete={(sender) => {
           handleComplete(sender);
         }}
-        // onComplete={(sender) => {
-        //   onQuizComplete(sender);
-        //   console.log("test");
-        // }}
         model={survey}
       />
     </div>

@@ -3,7 +3,6 @@ import * as yup from "yup";
 import React, { useState, useEffect } from "react";
 import { Form, Row, Col, Image } from "react-bootstrap";
 import axios from "axios";
-import Swal from "sweetalert2";
 
 const insertImage = async (data, props) => {
   let bodyFormData = new FormData();
@@ -13,6 +12,7 @@ const insertImage = async (data, props) => {
     method: "POST",
     url: "http://65.21.188.255:80/api/upload",
     data: bodyFormData,
+
     mode: "cors",
     headers: {
       "Content-Type": "multipart/form-data",
@@ -82,11 +82,12 @@ const Images = (props) => {
 
 const Selfie = (props) => {
   const [images, setImages] = useState("");
+  // const imageRef = useRef(0);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   let inputFile = "Selfie hochladen";
   // console.log(images);
-  useEffect(async () => {
+  const displayImages = async () => {
     await axios({
       method: "GET",
       mode: "cors",
@@ -100,7 +101,17 @@ const Selfie = (props) => {
       .catch((response) => {
         console.log(response);
       });
-  });
+  };
+
+  useEffect(() => {
+    displayImages();
+  }, []);
+
+  useEffect(() => {
+    setTimeout(() => {
+      displayImages();
+    }, 1500);
+  }, [isSubmitted]);
 
   const setImageId = async (data) => {
     await axios({

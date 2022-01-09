@@ -1,5 +1,21 @@
 import axios from "axios";
 
+export const getQuestionsFunctions = async () => {
+  try {
+    const response = await axios({
+      url: `http://65.21.188.255:80/api/questions`,
+      method: `GET`,
+      mode: "cors",
+      headers: {
+        "Content-type": "application/json",
+      },
+    });
+    return response;
+  } catch {
+    console.log("error");
+  }
+};
+
 /* drop table / delete table from database, nodejs api */
 export const dropTableFunction = async () => {
   try {
@@ -74,6 +90,7 @@ export const getRandomUsersFunction = async (teilnehmerInput) => {
         email,
         winnerId: 0,
         selfie: 0,
+        questions: 1,
       };
     }
 
@@ -98,6 +115,10 @@ export const luckyDrawFunction = (participants) => {
           participants[i],
           participants[i],
         ];
+      }
+
+      if (participants[i].gewinnspiel == 0) {
+        participants.splice(i, 1);
       }
     }
 

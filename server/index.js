@@ -45,19 +45,26 @@ db.connect((err) => {
   });
 
   app.post("/api/setid", async (req, res) => {
-    const sql = `UPDATE teilnehmer SET selfie=true WHERE id=${req.body.id}`;
+    fs.readdir("../frontend/build/media/", (err, files) => {
+      const sql = `UPDATE teilnehmer SET selfie='selfie${files.length}' WHERE id=${req.body.id}`;
 
-    db.query(sql, (err, result, fields) => {
-      if (err) throw err;
-      res.send(result);
+      db.query(sql, (err, result, fields) => {
+        if (err) throw err;
+        res.send(result);
+      });
     });
   });
 
   app.post("/api/upload", async (req, res) => {
+    let dirLength;
+    fs.readdir("../frontend/build/media/", (err, files) => {
+      dirLength = files.length;
+    });
     const form = new formidable.IncomingForm();
     form.parse(req, (err, fields, files) => {
       const oldpath = files.file.filepath;
-      const newpath = "../frontend/build/media/" + files.file.originalFilename;
+      const extension = path.extname(files.file.originalFilename);
+      const newpath = `../frontend/build/media/selfie${dirLength}.${extension}`;
       fs.rename(oldpath, newpath, (err) => {
         if (err) throw err;
         res.send("File uploaded and moved!");
@@ -87,7 +94,9 @@ db.connect((err) => {
     '${teilnehmer.telefonnummer}', 
     '${teilnehmer.email}',
     ${teilnehmer.winnerId},
-    '${teilnehmer.selfie}')`;
+    '${teilnehmer.selfie}',
+    ${teilnehmer.questions}
+    )`;
 
     db.query(sql, (err, result, fields) => {
       if (err) throw err;
@@ -124,6 +133,13 @@ db.connect((err) => {
     const sql = `UPDATE teilnehmer SET winnerID=0`;
 
     db.query(sql, (err, result, fields) => {
+      if (err) throw err;
+      res.send(result);
+    });
+  });
+
+  app.get("/api/questions", (req, res) => {
+    db.query("SELECT * FROM gewinnspiel", (err, result, fields) => {
       if (err) throw err;
       res.send(result);
     });

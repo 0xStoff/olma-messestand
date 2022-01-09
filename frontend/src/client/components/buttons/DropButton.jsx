@@ -1,6 +1,7 @@
 const Buttons = (props) => {
   const buttonClass = "btn btn-outline-dark m-2 buttonTheme";
-  const { query, successSwal, dropTable, errorSwal, confirmSwal } = props;
+  const { query, dropTable } = props;
+  const { successSwal, confirmSwal, errorSwal } = props.swalAlerts;
 
   const handleClickDrop = async () => {
     if (query.response == undefined || query.response.data.length == 0) {

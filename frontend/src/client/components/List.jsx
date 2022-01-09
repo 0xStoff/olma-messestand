@@ -23,6 +23,32 @@ const List = (props) => {
 
   return (
     <div className="m-3">
+      <h2 className="mt-5">Gewinner</h2>
+      <Card className="participants">
+        <Card.Body>
+          <Table>
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Vorname</th>
+                <th>Nachname</th>
+              </tr>
+            </thead>
+            <tbody className="winners">
+              {props.winnersObj.map((winner, i) => {
+                return (
+                  <tr key={i}>
+                    <td>{winner.winnerId}</td>
+                    <td>{winner.vorname}</td>
+                    <td>{winner.name}</td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </Table>
+        </Card.Body>{" "}
+      </Card>
+      <h2 className="mt-5">Teilnehmer</h2>
       <Card className="participants">
         <Card.Body>
           <Table>

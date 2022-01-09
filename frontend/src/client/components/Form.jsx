@@ -29,7 +29,6 @@ const schema = yup.object().shape({
 const insertParticipant = async (data, props) => {
   const { terms, ...teilnehmer } = data;
 
-  console.log(data);
   const responseId = await axios({
     url: "http://65.21.188.255/api/get",
     method: "GET",
@@ -41,8 +40,8 @@ const insertParticipant = async (data, props) => {
 
   teilnehmer.id = responseId.data.length + 1;
   teilnehmer.winnerId = 0;
+  teilnehmer.questions = props.surveyResult;
 
-  // console.log(teilnehmer);
   const response = await axios({
     url: "http://65.21.188.255/api/post",
     method: "POST",
@@ -91,6 +90,7 @@ const WinForm = (props) => {
             plz: "",
             selfie: 0,
             terms: false,
+            questions: 1,
           }}
           onSubmit={(values, { setSubmitting, resetForm }) => {
             insertParticipant(values, props);

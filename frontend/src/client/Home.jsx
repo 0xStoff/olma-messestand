@@ -1,12 +1,7 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { Card, Table, InputGroup, FormControl } from "react-bootstrap";
-import {
-  dropTableFunction,
-  queryDataFunction,
-  getRandomUsersFunction,
-  luckyDrawFunction,
-} from "./services/tableFunctions";
+import * as all from "./services/tableFunctions";
 import QueryButton from "./components/buttons/QueryButton";
 import DropButton from "./components/buttons/DropButton";
 import GenerateButton from "./components/buttons/GenerateButton";
@@ -16,16 +11,19 @@ import List from "./components/List";
 /* Home-Site Component */
 const Home = (props) => {
   /* define different states */
-  const { errorSwal, successSwal, confirmSwal } = props;
+  const { swalAlerts } = props;
+  const { errorSwal } = props.swalAlerts;
+  const {
+    dropTableFunction,
+    queryDataFunction,
+    getRandomUsersFunction,
+    luckyDrawFunction,
+  } = all;
 
   /* any state modified direytly? try console with setState */
   const [query, setQuery] = useState(0);
-  const [errorServer, setErrorServer] = useState(false);
   const [teilnehmerInput, setTeilnehmerInput] = useState(false);
   const [winnersObj, setWinnersObj] = useState([]);
-
-  // ajax calls in componentDidMount = useEffect in hooks
-  // mounting order: constructor > render > mounted
 
   const queryData = async () => {
     const response = await queryDataFunction();
@@ -113,62 +111,24 @@ const Home = (props) => {
     /* pass Home instead, use onDelete/handleDelete, destructure arguments */
     <div className="mt-5">
       <QueryButton queryData={queryData} />
-      <DropButton
-        query={query}
-        dropTable={dropTable}
-        errorSwal={errorSwal}
-        successSwal={successSwal}
-        confirmSwal={confirmSwal}
-      />
+      <DropButton query={query} dropTable={dropTable} swalAlerts={swalAlerts} />
       <GenerateButton
         queryData={queryData}
         getRandomUsers={getRandomUsers}
         query={query}
         teilnehmerInput={teilnehmerInput}
-        errorSwal={errorSwal}
-        successSwal={successSwal}
+        swalAlerts={swalAlerts}
       />
       <LuckyDrawButton
         query={query}
         queryData={queryData}
-        errorSwal={errorSwal}
+        errorSwal={swalAlerts.errorSwal}
         luckyDraw={luckyDraw}
       />
-
-      <InputGroup size="sm" className="generateUsers m-3">
+      <InputGroup size="sm" className="generateUsers m-2">
         <FormControl type="number" placeholder="number" onChange={onChange} />
       </InputGroup>
-      <div className="mt-5 m-3 w-50">
-        <h2>Gewinner</h2>
-        <Card className="participants">
-          <Card.Body>
-            <Table>
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>Vorname</th>
-                  <th>Nachname</th>
-                </tr>
-              </thead>
-              <tbody className="winners">
-                {winnersObj.map((winner, i) => {
-                  return (
-                    <tr key={i}>
-                      <td>{winner.winnerId}</td>
-                      <td>{winner.vorname}</td>
-                      <td>{winner.name}</td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </Table>
-          </Card.Body>{" "}
-        </Card>
-      </div>
-      <h2 className="mt-5 m-3">Teilnehmer</h2>
-
-      <List query={query} />
-      <div> {errorServer}</div>
+      <List query={query} winnersObj={winnersObj} />
     </div>
   );
 };

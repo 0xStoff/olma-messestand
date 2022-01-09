@@ -12101,7 +12101,8 @@ input::placeholder {
 .sv_body,
 .sv_q,
 .sv-string-viewer,
-.sv_main .sv_p_root > .sv_row {
+.sv_main .sv_p_root > .sv_row,
+.sv_q_erbox {
   background-color: var(--background-color-secondary) !important;
   color: var(--text-primary-color) !important;
   border: none !important;
@@ -12109,6 +12110,15 @@ input::placeholder {
 
 input[type="file"] {
   display: none;
+}
+
+.sv_q_erbox .sv-string-viewer {
+  color: #f27474 !important;
+}
+
+.heart {
+  color: #f27474;
+  margin: 0 2px 0 2px;
 }
 
 .sv_progress span {
