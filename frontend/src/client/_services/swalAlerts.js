@@ -14,7 +14,7 @@ export const swalAlerts = {
     swal.fire({
       icon: "error",
       title: output,
-      timer: 1000,
+      timer: 1500,
       timerProgressBar: true,
       didOpen: () => {
         Swal.showLoading();
@@ -25,7 +25,7 @@ export const swalAlerts = {
     const result = swal.fire({
       icon: "success",
       title: output,
-      timer: 1000,
+      timer: 1500,
       timerProgressBar: true,
       didOpen: () => {
         Swal.showLoading();

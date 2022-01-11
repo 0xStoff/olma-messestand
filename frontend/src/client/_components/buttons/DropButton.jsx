@@ -1,3 +1,5 @@
+import { Tooltip, OverlayTrigger } from "react-bootstrap";
+
 const Buttons = (props) => {
   const buttonClass = "btn btn-outline-dark m-2 buttonTheme";
   const { query, dropTable } = props;
@@ -17,15 +19,26 @@ const Buttons = (props) => {
   };
 
   return (
-    <button
-      onClick={() => {
-        handleClickDrop();
-      }}
-      type="button"
-      className={buttonClass}
+    <OverlayTrigger
+      placement="right"
+      delay={{ show: 1000, hide: 400 }}
+      overlay={
+        <Tooltip>
+          Löscht alle Teilnehmer aus der Datenbank. Die Tabelle wird nicht
+          effektiv gelöscht, nur alle darin enthaltenen Einträge.
+        </Tooltip>
+      }
     >
-      Drop{" "}
-    </button>
+      <button
+        onClick={() => {
+          handleClickDrop();
+        }}
+        type="button"
+        className={buttonClass}
+      >
+        Drop{" "}
+      </button>
+    </OverlayTrigger>
   );
 };
 

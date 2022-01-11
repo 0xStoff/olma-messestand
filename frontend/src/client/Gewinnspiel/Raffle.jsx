@@ -1,8 +1,8 @@
 import { Survey } from "survey-react";
 import React from "react";
 import "survey-react/survey.css";
-import { raffleQuestions } from "../services/raffleQuestions";
-import { getQuestionsFunctions } from "../services/tableFunctions";
+import { raffleQuestions } from "../_services/raffleQuestions";
+import { getQuestionsFunctions } from "../_services/tableFunctions";
 
 const Raffle = (props) => {
   let surveyJson = raffleQuestions();

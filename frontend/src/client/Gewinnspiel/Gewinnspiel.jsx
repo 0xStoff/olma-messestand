@@ -3,10 +3,11 @@ import React, { useState, useEffect } from "react";
 import "survey-react/survey.css";
 import { Container } from "react-bootstrap";
 
-import Form from "./components/Form";
-import Raffle from "./components/Raffle";
+import Form from "./Form";
+import Raffle from "./Raffle";
 
-import { raffleQuestions } from "./services/raffleQuestions";
+import { raffleQuestions } from "../_services/raffleQuestions";
+import { getQuestionsFunctions } from "../_services/tableFunctions";
 
 // const surveyJson = raffleQuestions();
 // const getSurveyJson = () => {
@@ -14,8 +15,6 @@ import { raffleQuestions } from "./services/raffleQuestions";
 //   console.log(test);
 //   return test;
 // };
-
-import { getQuestionsFunctions } from "./services/tableFunctions";
 
 const Gewinnspiel = (props) => {
   const [isCompleted, setIsCompleted] = useState(false);

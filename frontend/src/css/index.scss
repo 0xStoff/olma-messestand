@@ -42,6 +42,14 @@ $accent-color-light: #243b53;
 $text-primary-color-light: #102a43;
 $element-size: 3rem;
 
+// .form-range::-moz-range-thumb {
+//   background: blue !important;
+// }
+
+// .form-range::-ms-thumb {
+//   background-color: red !important;
+// }
+
 :root.dark-theme {
   --background-color-primary: #{$background-color-primary-dark};
   --background-color-secondary: #{$background-color-secondary-dark};
@@ -50,6 +58,10 @@ $element-size: 3rem;
 
   input::-webkit-calendar-picker-indicator {
     filter: invert(1);
+  }
+
+  .tooltip-inner {
+    box-shadow: none;
   }
 }
 
@@ -60,6 +72,9 @@ $element-size: 3rem;
   --text-primary-color: #{$text-primary-color-light};
   --element-size: #{$element-size};
 
+  .tooltip-inner {
+    box-shadow: 10px 10px 15px lightgrey;
+  }
   input::-webkit-calendar-picker-indicator {
     filter: invert(0);
   }
@@ -80,11 +95,14 @@ p,
 a,
 .navBar,
 h2,
+h3,
 th,
 td,
 tr,
 tbody,
-.themeText {
+.themeText,
+.info,
+.arrow {
   color: var(--text-primary-color);
 }
 .nav-link:hover,
@@ -92,7 +110,8 @@ tbody,
   color: var(--accent-color) !important;
 }
 
-input {
+form input,
+.generateUsers input {
   color: var(--accent-color) !important;
   background-color: var(--background-color-secondary) !important;
 
@@ -183,4 +202,47 @@ input[type="file"] {
   font-size: 10px;
   display: flex;
   justify-content: center;
+}
+
+.form-range::-webkit-slider-thumb {
+  background-color: var(--text-primary-color);
+}
+
+.tooltip-inner {
+  padding: 10px;
+  font-size: 12px;
+  background-color: var(--background-color-secondary);
+  color: var(--text-primary-color);
+}
+
+.tooltip.bs-tooltip-end .tooltip-arrow::before {
+  border-right-color: var(--background-color-secondary);
+}
+
+.feedbackTitle {
+  margin: 100px 0 100px 0;
+}
+
+.arrow {
+  display: flex;
+  justify-content: center;
+  font-size: 75px;
+  margin-top: 50px;
+}
+
+.fadeOut {
+  visibility: hidden;
+  opacity: 0;
+  height: 0;
+  transition: visibility 1s, opacity 1s linear;
+}
+
+.fadeIn {
+  height: auto;
+  opacity: 1;
+  transition: width 1s, opacity 1s 1s;
+}
+
+.visible {
+  display: none;
 }

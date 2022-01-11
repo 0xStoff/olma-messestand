@@ -1,4 +1,5 @@
 import Swal from "sweetalert2";
+import { Tooltip, OverlayTrigger } from "react-bootstrap";
 
 const Buttons = (props) => {
   const buttonClass = "btn btn-outline-dark m-2 buttonTheme";

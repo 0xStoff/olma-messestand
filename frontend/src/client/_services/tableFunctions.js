@@ -108,7 +108,7 @@ export const luckyDrawFunction = (participants) => {
     let participantSelfie = [];
 
     for (let i = 0; i < participants.length; i++) {
-      if (participants[i].selfie == 1) {
+      if (participants[i].selfie != 0) {
         participantSelfie = [
           ...participantSelfie,
           participants[i],

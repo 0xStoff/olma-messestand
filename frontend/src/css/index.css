@@ -11998,12 +11998,22 @@ fieldset:disabled .btn {
           filter: invert(1);
 }
 
+:root.dark-theme .tooltip-inner {
+  -webkit-box-shadow: none;
+          box-shadow: none;
+}
+
 :root {
   --background-color-primary: #ffffff;
   --background-color-secondary: #fafafa;
   --accent-color: #243b53;
   --text-primary-color: #102a43;
   --element-size: 3rem;
+}
+
+:root .tooltip-inner {
+  -webkit-box-shadow: 10px 10px 15px lightgrey;
+          box-shadow: 10px 10px 15px lightgrey;
 }
 
 :root input::-webkit-calendar-picker-indicator {
@@ -12027,12 +12037,14 @@ body {
 h1, .h1,
 p,
 a,
-.navBar, h2, .h2,
+.navBar, h2, .h2, h3, .h3,
 th,
 td,
 tr,
 tbody,
-.themeText {
+.themeText,
+.info,
+.arrow {
   color: var(--text-primary-color);
 }
 
@@ -12041,24 +12053,29 @@ tbody,
   color: var(--accent-color) !important;
 }
 
-input {
+form input,
+.generateUsers input {
   color: var(--accent-color) !important;
   background-color: var(--background-color-secondary) !important;
 }
 
-input::-webkit-input-placeholder {
+form input::-webkit-input-placeholder,
+.generateUsers input::-webkit-input-placeholder {
   color: var(--accent-color) !important;
 }
 
-input:-ms-input-placeholder {
+form input:-ms-input-placeholder,
+.generateUsers input:-ms-input-placeholder {
   color: var(--accent-color) !important;
 }
 
-input::-ms-input-placeholder {
+form input::-ms-input-placeholder,
+.generateUsers input::-ms-input-placeholder {
   color: var(--accent-color) !important;
 }
 
-input::placeholder {
+form input::placeholder,
+.generateUsers input::placeholder {
   color: var(--accent-color) !important;
 }
 
@@ -12166,5 +12183,54 @@ input[type="file"] {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
+}
+
+.form-range::-webkit-slider-thumb {
+  background-color: var(--text-primary-color);
+}
+
+.tooltip-inner {
+  padding: 10px;
+  font-size: 12px;
+  background-color: var(--background-color-secondary);
+  color: var(--text-primary-color);
+}
+
+.tooltip.bs-tooltip-end .tooltip-arrow::before, .tooltip.bs-tooltip-auto[data-popper-placement^="right"] .tooltip-arrow::before {
+  border-right-color: var(--background-color-secondary);
+}
+
+.feedbackTitle {
+  margin: 100px 0 100px 0;
+}
+
+.arrow {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  font-size: 75px;
+  margin-top: 50px;
+}
+
+.fadeOut {
+  visibility: hidden;
+  opacity: 0;
+  height: 0;
+  -webkit-transition: visibility 1s, opacity 1s linear;
+  transition: visibility 1s, opacity 1s linear;
+}
+
+.fadeIn {
+  height: auto;
+  opacity: 1;
+  -webkit-transition: width 1s, opacity 1s 1s;
+  transition: width 1s, opacity 1s 1s;
+}
+
+.visible {
+  display: none;
 }
 /*# sourceMappingURL=index.css.map */

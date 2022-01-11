@@ -1,12 +1,19 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { Card, Table, InputGroup, FormControl } from "react-bootstrap";
-import * as all from "./services/tableFunctions";
-import QueryButton from "./components/buttons/QueryButton";
-import DropButton from "./components/buttons/DropButton";
-import GenerateButton from "./components/buttons/GenerateButton";
-import LuckyDrawButton from "./components/buttons/LuckyDrawButton";
-import List from "./components/List";
+import {
+  Tooltip,
+  OverlayTrigger,
+  InputGroup,
+  FormControl,
+} from "react-bootstrap";
+
+import * as all from "../_services/tableFunctions";
+import QueryButton from "../_components/buttons/QueryButton";
+import DropButton from "../_components/buttons/DropButton";
+import GenerateButton from "../_components/buttons/GenerateButton";
+import LuckyDrawButton from "../_components/buttons/LuckyDrawButton";
+import List from "./List";
+import TooltipComponent from "../_components/common/tooltip";
 
 /* Home-Site Component */
 const Home = (props) => {
@@ -70,6 +77,7 @@ const Home = (props) => {
   };
 
   const luckyDraw = async () => {
+    // console.log(query.response.data);
     let uniqueWinners = luckyDrawFunction(query.response.data);
 
     for (let i = 0; i < uniqueWinners.length; i++) {
@@ -110,14 +118,22 @@ const Home = (props) => {
   return (
     /* pass Home instead, use onDelete/handleDelete, destructure arguments */
     <div className="mt-5">
-      <QueryButton queryData={queryData} />
-      <DropButton query={query} dropTable={dropTable} swalAlerts={swalAlerts} />
-      <LuckyDrawButton
-        query={query}
-        queryData={queryData}
-        errorSwal={swalAlerts.errorSwal}
-        luckyDraw={luckyDraw}
-      />
+      <div className="d-flex">
+        <QueryButton queryData={queryData} />
+        <DropButton
+          query={query}
+          dropTable={dropTable}
+          swalAlerts={swalAlerts}
+        />
+
+        <LuckyDrawButton
+          query={query}
+          queryData={queryData}
+          errorSwal={swalAlerts.errorSwal}
+          luckyDraw={luckyDraw}
+        />
+      </div>
+
       <div className="d-flex">
         <GenerateButton
           queryData={queryData}
@@ -126,9 +142,14 @@ const Home = (props) => {
           teilnehmerInput={teilnehmerInput}
           swalAlerts={swalAlerts}
         />
-        <InputGroup size="sm" className="generateUsers m-2">
+        <InputGroup className="generateUsers m-2">
           <FormControl type="number" placeholder="number" onChange={onChange} />
         </InputGroup>
+        <TooltipComponent
+          text={`Generiere zwischen 1 und 100 zufälligen Teilnehmern. Daten werden von
+      https://random-data-api.com/ abgerufen und in die MySQL Datenbank
+      geschrieben.`}
+        />
       </div>
       <List query={query} winnersObj={winnersObj} />
     </div>

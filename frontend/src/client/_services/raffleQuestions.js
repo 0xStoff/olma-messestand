@@ -33,7 +33,7 @@ export const raffleQuestions = () => {
         elements: [
           {
             type: "radiogroup",
-            isRequired: "true",
+            // isRequired: "true",
             name: "founding",
             choicesOrder: "random",
             choices: ["", "", "", ""],
@@ -44,7 +44,7 @@ export const raffleQuestions = () => {
         elements: [
           {
             type: "radiogroup",
-            isRequired: "true",
+            // isRequired: "true",
             name: "mascot",
             choicesOrder: "random",
             choices: ["", "", "", ""],
@@ -55,7 +55,7 @@ export const raffleQuestions = () => {
         elements: [
           {
             type: "radiogroup",
-            isRequired: "true",
+            // isRequired: "true",
             name: "headquarter",
             choicesOrder: "random",
             choices: ["", "", "", ""],
@@ -66,7 +66,7 @@ export const raffleQuestions = () => {
         elements: [
           {
             type: "radiogroup",
-            isRequired: "true",
+            // isRequired: "true",
             name: "products",
             choicesOrder: "random",
             choices: ["", "", "", ""],
@@ -77,7 +77,7 @@ export const raffleQuestions = () => {
         elements: [
           {
             type: "radiogroup",
-            isRequired: "true",
+            // isRequired: "true",
             name: "motto",
             choicesOrder: "random",
             choices: ["", "", "", ""],

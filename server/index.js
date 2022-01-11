@@ -57,6 +57,7 @@ db.connect((err) => {
   app.post("/api/setid", async (req, res) => {
     fs.readdir("../frontend/build/media/", (err, files) => {
       const sql = `UPDATE gewinnspiel_daten SET selfie='selfie${files.length}' WHERE teilnehmer_id=${req.body.id};
+      UPDATE teilnehmer SET selfie='selfie${files.length}' WHERE teilnehmer_id=${req.body.id};
       SELECT vorname FROM teilnehmer WHERE teilnehmer_id=${req.body.id};`;
 
       db.query(sql, (err, result, fields) => {
@@ -104,7 +105,7 @@ db.connect((err) => {
     '${teilnehmer.adresse}',
     '${teilnehmer.plz}',
     '${teilnehmer.telefonnummer}',
-    '${teilnehmer.email}'); 
+    '${teilnehmer.email}','${teilnehmer.selfie}'); 
     INSERT INTO gewinnspiel_daten VALUES 
     (${teilnehmer.id},
      ${teilnehmer.winnerId},
@@ -119,6 +120,18 @@ db.connect((err) => {
   });
 
   app.post("/api/delete", (req, res) => {
+    const directoryPath = path.join(__dirname, "../frontend/build/media/");
+
+    fs.readdir(directoryPath, (err, files) => {
+      if (err) throw err;
+
+      for (const file of files) {
+        fs.unlink(path.join(directoryPath, file), (err) => {
+          if (err) throw err;
+        });
+      }
+    });
+
     const sql = `DELETE gewinnspiel_daten, teilnehmer FROM gewinnspiel_daten INNER JOIN teilnehmer`;
 
     db.query(sql, (err, result, fields) => {

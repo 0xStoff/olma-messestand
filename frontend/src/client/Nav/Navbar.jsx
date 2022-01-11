@@ -1,7 +1,6 @@
 import { Outlet, NavLink } from "react-router-dom";
 import React from "react";
-import DarkMode from "./components/common/dark-mode";
-import Footer from "./Footer";
+import DarkMode from "../components/common/dark-mode";
 
 /* Navigation-Links with different paths */
 const Layout = () => {
@@ -20,12 +19,14 @@ const Layout = () => {
             <NavLink className={classes} to="/selfie">
               Upload Selfie
             </NavLink>
+            <NavLink className={classes} to="/umfrage">
+              Umfrage
+            </NavLink>
           </nav>
           <DarkMode />
         </div>
         <Outlet />
       </div>
-      <Footer />
     </>
   );
 };
