@@ -8,13 +8,14 @@ const ApexChart = (props) => {
   const [config, setConfig] = useState(chartConfig);
   const [participants, setParticipants] = useState(chartConfig);
 
+  const { resultFragen, umfrage } = props;
   useEffect(() => {
+    config.options.labels = umfrage;
     getParticipants();
   }, [props]);
 
   const getParticipants = async () => {
     const response = await getUmfrageResult();
-
     setParticipants(() => {
       return response.data.length;
     });
@@ -25,11 +26,14 @@ const ApexChart = (props) => {
       <Tooltip
         text={`Aktuell haben ${participants} Teilnehmer an der Umfrage teilgenommen, es wird jeweils der Ø-Wert nach Frage berechnet.`}
       />
-      <Chart
-        options={config.options}
-        series={props.resultFragen}
-        type="polarArea"
-      />
+      {config.options.labels ? (
+        <Chart
+          options={config.options}
+          series={resultFragen}
+          labels={umfrage}
+          type="polarArea"
+        />
+      ) : null}
     </div>
   );
 };

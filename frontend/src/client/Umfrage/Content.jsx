@@ -1,7 +1,11 @@
 import { Form, Col } from "react-bootstrap";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { sendUmfrageResults, getUmfrageResult } from "./umfrageServices";
+import {
+  sendUmfrageResults,
+  getUmfrageResult,
+  getUmfrageQuestions,
+} from "./umfrageServices";
 
 const UmfrageContent = (props) => {
   let visibleClass = !props.surveyStart ? "fadeIn" : "fadeOut visible";
@@ -14,6 +18,7 @@ const UmfrageContent = (props) => {
     setSurveyStart,
     inputEl,
     surveyStart,
+    umfrage,
   } = props;
   const [rangeInputs, setRangeInputs] = useState({
     frage0: 10,
@@ -34,10 +39,6 @@ const UmfrageContent = (props) => {
     });
   };
 
-  // const getUmfrageData = async () => {
-  //   console.log(response.data);
-  // };
-
   const handleInput = (e) => {
     setRangeInputs((state) => {
       const range = e.target.id;
@@ -45,6 +46,7 @@ const UmfrageContent = (props) => {
       return { ...state, [range]: value };
     });
   };
+
   return (
     <form
       className={`${visibleClass} container w-75 d-flex flex-column rangeContainer`}
@@ -52,53 +54,24 @@ const UmfrageContent = (props) => {
       onInput={handleInput}
     >
       <div className={!surveyStart ? "fadeIn" : "fadeOut"}>
-        <p className={visibleClass}>Wie hat dir unser Stand gefallen?</p>
-        <input
-          type="range"
-          className={rangeClass}
-          min="0"
-          max="9"
-          step="1"
-          id="frage0"
-        />
-        <p className={visibleClass}>Wie empfindest du die Website?</p>
-        <input
-          type="range"
-          className={rangeClass}
-          min="0"
-          max="9"
-          step="1"
-          id="frage1"
-        />
-        <p className={visibleClass}>Würdest du wiederkommen?</p>
-        <input
-          type="range"
-          className={rangeClass}
-          min="0"
-          max="9"
-          step="1"
-          id="frage2"
-        />
-        <p className={visibleClass}>Wie hast du die Betreuung empfunden?</p>
-
-        <input
-          type="range"
-          className={rangeClass}
-          min="0"
-          max="9"
-          step="1"
-          id="frage3"
-        />
-        <p className={visibleClass}>Würdest du uns weiterempfehlen?</p>
-        <input
-          type="range"
-          className={rangeClass}
-          min="0"
-          max="9"
-          step="1"
-          id="frage4"
-          // value={value}
-        />
+        {umfrage
+          ? umfrage.map((um, i) => {
+              return (
+                <div key={i}>
+                  {" "}
+                  <p className={visibleClass}>{um}?</p>
+                  <input
+                    type="range"
+                    className={rangeClass}
+                    min="0"
+                    max="9"
+                    step="1"
+                    id={`frage${i}`}
+                  />
+                </div>
+              );
+            })
+          : null}
       </div>
       <button ref={inputEl} type="submit" className={btnClass}>
         Absenden

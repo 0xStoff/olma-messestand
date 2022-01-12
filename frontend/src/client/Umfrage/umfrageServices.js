@@ -33,22 +33,31 @@ export const getUmfrageResult = async (result) => {
   }
 };
 
+export const getUmfrageQuestions = async (result) => {
+  try {
+    const response = await axios({
+      url: `http://65.21.188.255:80/api/umfrage`,
+      method: `GET`,
+      mode: "cors",
+      headers: {
+        "Content-type": "application/json",
+      },
+    });
+    return response;
+  } catch {
+    console.log("error");
+  }
+};
+
 export const chartConfig = (props) => {
   // console.log(props);
   const config = {
-    // series: [40, 50, 50, 60, 70],
     options: {
       chart: {
         width: 380,
         type: "polarArea",
       },
-      labels: [
-        "Wie hat dir unser Stand gefallen?",
-        "Wie empfindest du die Website?",
-        "Würdest du wiederkommen?",
-        "Wie hast du die Betreuung empfunden?",
-        "Würdest du uns weiterempfehlen?",
-      ],
+
       fill: {
         opacity: 1,
       },

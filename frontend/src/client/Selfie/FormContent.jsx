@@ -15,6 +15,10 @@ const FormContent = (props) => {
     isSubmitted,
   } = props;
 
+  if (isSubmitted) {
+    inputFile = "Selfie hochladen";
+  }
+
   return (
     <div className="row w-50">
       <Form onSubmit={handleSubmit}>
