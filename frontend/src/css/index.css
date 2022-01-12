@@ -12044,8 +12044,9 @@ tr,
 tbody,
 .themeText,
 .info,
-.arrow {
-  color: var(--text-primary-color);
+.arrow,
+.apexcharts-legend-text {
+  color: var(--text-primary-color) !important;
 }
 
 .nav-link:hover,
@@ -12053,35 +12054,35 @@ tbody,
   color: var(--accent-color) !important;
 }
 
-form input,
+.gewinnspielForm input,
+.gewinnspielRaffle input,
 .generateUsers input {
   color: var(--accent-color) !important;
   background-color: var(--background-color-secondary) !important;
 }
 
-form input::-webkit-input-placeholder,
+.gewinnspielForm input::-webkit-input-placeholder,
+.gewinnspielRaffle input::-webkit-input-placeholder,
 .generateUsers input::-webkit-input-placeholder {
   color: var(--accent-color) !important;
 }
 
-form input:-ms-input-placeholder,
+.gewinnspielForm input:-ms-input-placeholder,
+.gewinnspielRaffle input:-ms-input-placeholder,
 .generateUsers input:-ms-input-placeholder {
   color: var(--accent-color) !important;
 }
 
-form input::-ms-input-placeholder,
+.gewinnspielForm input::-ms-input-placeholder,
+.gewinnspielRaffle input::-ms-input-placeholder,
 .generateUsers input::-ms-input-placeholder {
   color: var(--accent-color) !important;
 }
 
-form input::placeholder,
+.gewinnspielForm input::placeholder,
+.gewinnspielRaffle input::placeholder,
 .generateUsers input::placeholder {
   color: var(--accent-color) !important;
-}
-
-.formPosition {
-  margin: 100px auto;
-  width: 75%;
 }
 
 .generateUsers {
@@ -12174,17 +12175,6 @@ input[type="file"] {
   }
 }
 
-.footer {
-  margin: 70px 0 30px 0;
-  font-size: 10px;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-}
-
 .form-range::-webkit-slider-thumb {
   background-color: var(--text-primary-color);
 }
@@ -12200,7 +12190,8 @@ input[type="file"] {
   border-right-color: var(--background-color-secondary);
 }
 
-.feedbackTitle {
+.feedbackTitle,
+.gewinnspielForm {
   margin: 100px 0 100px 0;
 }
 
@@ -12232,5 +12223,9 @@ input[type="file"] {
 
 .visible {
   display: none;
+}
+
+.apexcharts-legend-marker {
+  border-width: 1px !important;
 }
 /*# sourceMappingURL=index.css.map */

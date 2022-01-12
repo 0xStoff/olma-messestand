@@ -47,7 +47,7 @@ const Raffle = (props) => {
   };
 
   return (
-    <div className="w-75 mt-5 mx-auto mb-5">
+    <div className="w-75 mt-5 mx-auto mb-5 gewinnspielRaffle">
       <Survey
         onTimerPanelInfoText={(sender, panel) => {
           let remainingTime = 60 - sender.timeSpent;

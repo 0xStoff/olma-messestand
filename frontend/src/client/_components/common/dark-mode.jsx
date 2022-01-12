@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./dark-mode.css";
+import "font-awesome/css/font-awesome.css";
 
 const DarkMode = () => {
   const getMediaPreference = () => {
@@ -40,9 +41,6 @@ const DarkMode = () => {
       ? "switch-toggle"
       : "switch-toggle switch-toggle-checked";
 
-  // userTheme === "dark-theme"
-  //     ? "switch-toggle"
-  //     : "switch-toggle switch-toggle-checked"
   return (
     <React.Fragment>
       <input
@@ -52,21 +50,13 @@ const DarkMode = () => {
         className="switch-checkbox"
       />
       <label htmlFor="checkbox" className="switch-label">
-        <span>🌙</span>
-        <span>☀️</span>
-        <div
-          // :class="{ 'switch-toggle-checked': userTheme === 'dark-theme' }"
-          // className={
-          //   userTheme === "dark-theme" ? " switch-toggle-checked" : null
-          // }
-
-          className={toggleClass}
-          // className={
-          //   userTheme === "dark-theme"
-          //     ? "switch-toggle"
-          //     : "switch-toggle switch-toggle-checked"
-          // }
-        ></div>
+        <span>
+          <i className="fa fa-moon-o moon" />
+        </span>
+        <span>
+          <i className="fa fa-sun-o sun" />
+        </span>
+        <div className={toggleClass}></div>
       </label>
     </React.Fragment>
   );

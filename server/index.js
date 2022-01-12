@@ -144,6 +144,8 @@ db.connect((err) => {
     const teilnehmer = req.body;
     let endResult = [];
 
+    db.query(`UPDATE gewinnspiel_daten SET winner_id=0;`);
+
     for (let i = 0; i < teilnehmer.length; i++) {
       const sql = `UPDATE gewinnspiel_daten SET winner_id=${teilnehmer[i].winnerId} WHERE teilnehmer_id=${teilnehmer[i].teilnehmer_id}`;
       db.query(sql, (err, result, fields) => {
@@ -165,6 +167,22 @@ db.connect((err) => {
 
   app.get("/api/questions", (req, res) => {
     db.query("SELECT * FROM gewinnspiel_fragen", (err, result, fields) => {
+      if (err) throw err;
+      res.send(result);
+    });
+  });
+
+  app.post("/api/result", (req, res) => {
+    const sql = `INSERT INTO umfrage(frage_0,frage_1,frage_2,frage_3,frage_4) VALUES
+    (${req.body.frage0},${req.body.frage1},${req.body.frage2},${req.body.frage3},${req.body.frage4})`;
+    db.query(sql, (err, result, fields) => {
+      if (err) throw err;
+      res.send(result);
+    });
+  });
+
+  app.get("/api/allresults", (req, res) => {
+    db.query("SELECT * FROM umfrage", (err, result, fields) => {
       if (err) throw err;
       res.send(result);
     });

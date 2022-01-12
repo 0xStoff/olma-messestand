@@ -16,7 +16,10 @@ const App = () => {
         <Route path="/" element={<Navbar />}>
           <Route index element={<Home swalAlerts={swalAlerts} />} />
           <Route path="selfie" element={<Selfie swalAlerts={swalAlerts} />} />
-          <Route path="umfrage" element={<Umfrage />} />
+          <Route
+            path="umfrage"
+            element={<Umfrage successSwal={swalAlerts.successSwal} />}
+          />
           <Route
             path="raffle"
             element={<Gewinnspiel successSwal={swalAlerts.successSwal} />}

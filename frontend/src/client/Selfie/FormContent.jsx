@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { Form, Col } from "react-bootstrap";
 import Thumb from "./Thumb";
 
@@ -19,8 +18,9 @@ const FormContent = (props) => {
   return (
     <div className="row w-50">
       <Form onSubmit={handleSubmit}>
-        <Form.Group as={Col} md="5">
+        <Form.Group as={Col} md="5" className="generateUsers">
           <Form.Control
+            autoComplete="off"
             type="number"
             placeholder="id"
             name="id"
