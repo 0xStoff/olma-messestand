@@ -45,6 +45,7 @@ const FormContent = (props) => {
           id="file"
           name="file"
           type="file"
+          accept="image/*"
           onChange={(event, file) => {
             inputFile = event.currentTarget.files[0].name;
             setFieldValue("file", event.currentTarget.files[0]);
