@@ -19,7 +19,7 @@ const FormContent = (props) => {
       <Row className="justify-content-between">
         <Form.Group as={Col} md="6" className="mb-2">
           <Form.Control
-            autocomplete="off"
+            autoComplete="off"
             type="text"
             placeholder="Vorname"
             name="vorname"
@@ -32,7 +32,7 @@ const FormContent = (props) => {
 
         <Form.Group as={Col} md="6" className="mb-2">
           <Form.Control
-            autocomplete="off"
+            autoComplete="off"
             type="text"
             placeholder="Nachname"
             name="name"
@@ -49,7 +49,7 @@ const FormContent = (props) => {
       <Row className="justify-content-between">
         <Form.Group as={Col} md="6" className="mb-2">
           <Form.Control
-            autocomplete="off"
+            autoComplete="off"
             type="date"
             placeholder="Geburtsdatum"
             name="geburtstag"
@@ -62,7 +62,7 @@ const FormContent = (props) => {
 
         <Form.Group as={Col} md="6" className="mb-2">
           <Form.Control
-            autocomplete="off"
+            autoComplete="off"
             type="text"
             placeholder="Adresse"
             name="adresse"
@@ -79,7 +79,7 @@ const FormContent = (props) => {
       <Row className="justify-content-between">
         <Form.Group as={Col} md="6" className="mb-2">
           <Form.Control
-            autocomplete="off"
+            autoComplete="off"
             type="number"
             placeholder="Telefonnummer"
             name="telefonnummer"
@@ -96,7 +96,7 @@ const FormContent = (props) => {
         </Form.Group>
         <Form.Group as={Col} md="6" className="mb-2">
           <Form.Control
-            autocomplete="off"
+            autoComplete="off"
             type="email"
             placeholder="E-Mail"
             name="email"
@@ -113,7 +113,7 @@ const FormContent = (props) => {
       <Row>
         <Form.Group as={Col} md="6" className="mb-2">
           <Form.Control
-            autocomplete="off"
+            autoComplete="off"
             type="number"
             placeholder="PLZ"
             name="plz"
