@@ -1,4 +1,14 @@
 # Olma-messestand Schulprojekt für ICT
 
-Getting started with React
+Learning first general concepts in different topics:
+
+ - MySql 
+ - nodeJs + express
+ - react
+ - hosting
+
+
+
+
+
 
